@@ -1,0 +1,26 @@
+{
+  "id": "policy-v2-refers-30k",
+  "category": "Policy versions",
+  "title": "$30,000 under policy v2, whose limit is $25,000",
+  "expected_verdict": "REFER",
+  "policy_version": "fin-transfer/2026-10-01.2",
+  "request": {
+    "request_id": "req-1801",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 30000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 81000,
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

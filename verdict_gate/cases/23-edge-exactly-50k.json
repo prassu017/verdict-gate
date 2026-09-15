@@ -1,0 +1,25 @@
+{
+  "id": "edge-exactly-50k",
+  "category": "Boundaries",
+  "title": "Exactly $50,000",
+  "expected_verdict": "ADMIT",
+  "request": {
+    "request_id": "req-1702",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 50000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 81000,
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

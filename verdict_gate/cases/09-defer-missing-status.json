@@ -1,0 +1,24 @@
+{
+  "id": "defer-missing-status",
+  "category": "Missing evidence",
+  "title": "No vendor_status supplied",
+  "expected_verdict": "DEFER",
+  "request": {
+    "request_id": "req-1302",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 24000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 81000,
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

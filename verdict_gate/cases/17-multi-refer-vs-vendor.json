@@ -1,0 +1,26 @@
+{
+  "id": "multi-refer-vs-vendor",
+  "category": "Multiple rules",
+  "title": "$60,000 to a freshly checked suspended vendor: HALT, not REFER",
+  "expected_verdict": "HALT",
+  "expected_reason_code": "POLICY_PROHIBITED",
+  "request": {
+    "request_id": "req-1602",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 60000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 81000,
+      "vendor_status": "suspended",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

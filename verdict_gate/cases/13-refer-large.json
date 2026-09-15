@@ -1,0 +1,25 @@
+{
+  "id": "refer-large",
+  "category": "Another authority",
+  "title": "$120,000 transfer with a $200,000 balance",
+  "expected_verdict": "REFER",
+  "request": {
+    "request_id": "req-1402",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 120000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 200000,
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

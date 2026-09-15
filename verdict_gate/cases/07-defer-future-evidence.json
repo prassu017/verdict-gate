@@ -1,0 +1,25 @@
+{
+  "id": "defer-future-evidence",
+  "category": "Stale evidence",
+  "title": "Vendor evidence timestamped after evaluated_at",
+  "expected_verdict": "DEFER",
+  "request": {
+    "request_id": "req-1202",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 24000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 81000,
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:25:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

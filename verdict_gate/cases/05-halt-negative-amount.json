@@ -1,0 +1,26 @@
+{
+  "id": "halt-negative-amount",
+  "category": "Explicit HALT",
+  "title": "Amount is -5",
+  "expected_verdict": "HALT",
+  "expected_reason_code": "INVALID_OR_UNCOVERED",
+  "request": {
+    "request_id": "req-1104",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": -5,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 81000,
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "halt-unknown-action",
+  "category": "Unknown action",
+  "title": "Action type delete_vendor",
+  "expected_verdict": "HALT",
+  "expected_reason_code": "INVALID_OR_UNCOVERED",
+  "request": {
+    "request_id": "req-1501",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "delete_vendor",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 81000,
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

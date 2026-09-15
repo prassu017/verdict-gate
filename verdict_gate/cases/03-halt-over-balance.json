@@ -1,0 +1,26 @@
+{
+  "id": "halt-over-balance",
+  "category": "Explicit HALT",
+  "title": "$30,000 transfer against a $20,000 balance",
+  "expected_verdict": "HALT",
+  "expected_reason_code": "POLICY_PROHIBITED",
+  "request": {
+    "request_id": "req-1102",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 30000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "account_balance": 20000,
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}

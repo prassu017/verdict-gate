@@ -1,0 +1,25 @@
+{
+  "id": "defer-missing-balance",
+  "category": "Missing evidence",
+  "title": "No account_balance supplied",
+  "expected_verdict": "DEFER",
+  "expected_reason_code": "INSUFFICIENT_EVIDENCE",
+  "request": {
+    "request_id": "req-1301",
+    "actor": {
+      "id": "agent-17",
+      "role": "finance_agent"
+    },
+    "action": {
+      "type": "transfer_funds",
+      "amount": 24000,
+      "currency": "USD",
+      "destination": "vendor-882"
+    },
+    "evidence": {
+      "vendor_status": "approved",
+      "vendor_status_checked_at": "2026-09-14T20:15:00Z"
+    },
+    "evaluated_at": "2026-09-14T20:20:00Z"
+  }
+}
