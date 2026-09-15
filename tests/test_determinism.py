@@ -4,11 +4,12 @@ from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from verdict_gate import decide
-from verdict_gate.canonical import fingerprint, format_timestamp
+from verdict_gate import DecisionService, InMemoryLedger, decide
+from verdict_gate.canonical import fingerprint, format_decimal, format_timestamp, to_decimal
 from helpers import BASE, make
 
 EVALUATED_AT = datetime(2026, 9, 14, 20, 20, tzinfo=timezone.utc)
@@ -43,6 +44,41 @@ def test_different_request_ids_get_different_decision_ids_but_the_same_input_has
     a, b = decide(make()), decide(make({"request_id": "req-9999"}))
     assert a.decision_id != b.decision_id
     assert a.input_hash == b.input_hash
+
+
+AT_LIMIT = Decimal("50000")
+JUST_OVER = Decimal("50000.0000000000000000000000000001")  # beyond the default 28-digit context
+
+
+def test_canonicalization_never_rounds_amounts():
+    at_limit, just_over = make({"action.amount": AT_LIMIT}), make({"action.amount": JUST_OVER})
+    a, b = decide(at_limit), decide(just_over)
+    assert (a.verdict, b.verdict) == ("ADMIT", "REFER")
+    assert a.input_hash != b.input_hash
+    assert a.decision_id != b.decision_id
+    assert fingerprint(at_limit) != fingerprint(just_over)
+
+
+def test_retry_with_an_amount_beyond_default_precision_is_a_conflict_not_a_replay():
+    svc = DecisionService(InMemoryLedger())
+    assert svc.evaluate(make({"action.amount": AT_LIMIT}))["verdict"] == "ADMIT"
+    assert svc.evaluate(make({"action.amount": JUST_OVER}))["reason_code"] == "IDEMPOTENCY_CONFLICT"
+
+
+@pytest.mark.parametrize(
+    ("value", "text"),
+    [
+        (Decimal("24000.00"), "24000"),
+        (24000.0, "24000"),
+        (Decimal("2.4E+4"), "24000"),
+        (Decimal("-0.00"), "0"),
+        (Decimal("0.10"), "0.1"),
+        (Decimal("1E-30"), "0." + "0" * 29 + "1"),
+        (JUST_OVER, "50000.0000000000000000000000000001"),
+    ],
+)
+def test_format_decimal_is_exact(value, text):
+    assert format_decimal(to_decimal(value)) == text
 
 
 def _request(amount, balance, status, age_seconds, role, kind, currency):

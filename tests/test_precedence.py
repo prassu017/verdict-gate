@@ -93,6 +93,9 @@ def test_rule_boundaries(changes, verdict):
         ({"action.currency": "EUR"}, "DEFER"),
         ({"evaluated_at": "yesterday"}, "DEFER"),
         ({"evidence.vendor_status_checked_at": "2026-09-14T20:15:00"}, "DEFER"),  # no timezone
+        ({"action.destination": DELETE}, "HALT"),
+        ({"action.destination": None}, "HALT"),
+        ({"action.destination": "  "}, "HALT"),
         ({"evidence.account_balance": "81000"}, "DEFER"),
     ],
 )

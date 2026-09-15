@@ -40,19 +40,21 @@ class Ledger(Protocol):
 
 
 class InMemoryLedger:
-    """Process-local. Fine for tests and a single process; resets with the process."""
+    """Process-local; resets with the process. Stores JSON text like Redis, so nobody can mutate a record."""
 
     def __init__(self) -> None:
-        self._records: dict[str, LedgerRecord] = {}
+        self._records: dict[str, str] = {}
         self._lock = threading.Lock()
 
     def get(self, request_id: str) -> LedgerRecord | None:
         with self._lock:
-            return self._records.get(request_id)
+            raw = self._records.get(request_id)
+        return None if raw is None else LedgerRecord.from_json(raw)
 
     def put_if_absent(self, record: LedgerRecord) -> LedgerRecord:
         with self._lock:
-            return self._records.setdefault(record.request_id, record)
+            raw = self._records.setdefault(record.request_id, record.to_json())
+        return LedgerRecord.from_json(raw)
 
     def __len__(self) -> int:
         return len(self._records)

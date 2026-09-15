@@ -439,7 +439,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-si
               <li><code>evaluated_at</code> is supplied by the caller and trusted; freshness is measured against it, never the server clock.</li>
               <li><code>account_balance</code> carries no timestamp, so it counts as current at <code>evaluated_at</code>.</li>
               <li>Boundaries pass: evidence exactly 30:00 old, exactly $50,000, amount equal to balance.</li>
-              <li>Timestamps must be ISO-8601 with a timezone. Amounts must be positive numbers, and a <code>request_id</code> is required.</li>
+              <li>Timestamps must be ISO-8601 with a timezone. Amounts must be positive numbers, and a <code>request_id</code> and a destination are required; otherwise the request HALTs as malformed.</li>
               <li>Only <code>"approved"</code> passes the vendor rule. Any other status on fresh evidence is a HALT.</li>
             </ul>
           </article>
@@ -461,7 +461,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-si
           <article><span class="qn">QUESTION 4</span><h4>What makes two evaluations "the same"?</h4>
             <ul>
               <li>The same policy version and policy digest.</li>
-              <li>The same <b>canonical decision inputs</b>: only the fields the rules read, with key order, number spelling (24000 vs 24000.00) and timezone spelling (Z vs +02:00) normalized. A missing field is different from null.</li>
+              <li>The same <b>canonical decision inputs</b>: only the fields the rules read, with key order, number spelling (24000 vs 24000.00) and timezone spelling (Z vs +02:00) normalized, without ever rounding a number. A missing field is different from null.</li>
               <li><code>decision_id</code> = SHA-256 of <code>request_id</code>, input hash and policy digest, so identical inputs always produce the identical id.</li>
               <li>For retries, the ledger also compares a fingerprint of the whole canonical payload, so any change under a reused id is caught.</li>
               <li>Checked by Hypothesis (400 random requests, shuffled keys) and a test that fails if <code>decide()</code> reads the clock.</li>
@@ -570,7 +570,7 @@ const GATES = [
 const RULES = {
   P6: { gate: 1, name: () => "Action covered", text: () => "Any action type not covered by the supplied policy cannot be assumed permissible.", reads: ["action.type"], onFail: "HALT" },
   P1: { gate: 1, name: () => "Role allowed", text: () => "A finance_agent may propose a transfer_funds action.", reads: ["actor.role", "action.type"], onFail: "HALT" },
-  REQ: { gate: 1, name: () => "Request valid", text: () => "Assumption: request_id is present and the amount is a positive number.", reads: ["request_id", "action.amount"], onFail: "HALT" },
+  REQ: { gate: 1, name: () => "Request valid", text: () => "Assumption: request_id and a destination are present, and the amount is a positive number.", reads: ["request_id", "action.destination", "action.amount"], onFail: "HALT" },
   P3: { gate: 2, name: () => "Vendor approved", text: () => "The destination vendor must be approved.", reads: ["action.destination", "evidence.vendor_status"], onFail: "HALT", onUnknown: "DEFER" },
   P5: { gate: 2, name: () => "Within balance", text: () => "A transfer may not exceed the currently supplied account balance.", reads: ["action.amount", "evidence.account_balance"], onFail: "HALT", onUnknown: "DEFER" },
   P2: { gate: 3, name: p => `Within ${usd(p ? p.refer_above : 50000)}`, text: p => `Transfers greater than ${usd(p ? p.refer_above : 50000)} require another authority.`, reads: ["action.amount", "action.currency"], onFail: "REFER", onUnknown: "DEFER" },

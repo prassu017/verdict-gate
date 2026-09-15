@@ -80,8 +80,11 @@ def _section(root: Mapping, key: str) -> Mapping:
 
 
 def usd(amount: Decimal) -> str:
-    text = f"{amount:,.2f}"
-    return "$" + (text[:-3] if text.endswith(".00") else text)
+    """Dollars with thousands separators; cents when present. Never rounds."""
+    whole, _, fraction = format_decimal(amount).partition(".")
+    sign = "-" if whole.startswith("-") else ""
+    text = f"{sign}${int(whole.lstrip('-')):,}"
+    return text + ("." + fraction.ljust(2, "0") if fraction else "")
 
 
 def duration(seconds: float) -> str:
@@ -118,9 +121,11 @@ def role_allowed(view: RequestView, policy: Policy) -> CheckResult:
 
 
 def request_well_formed(view: RequestView) -> CheckResult:
-    """REQ (assumption): a request needs an id to be auditable and a positive numeric amount."""
+    """REQ (assumption): a request needs an id to be auditable, a destination and a positive numeric amount."""
     if not isinstance(view.request_id, str) or not view.request_id.strip():
         return _result("REQ", Status.FAIL, f"request_id must be a non-empty string (got {shown(view.request_id)})")
+    if not isinstance(view.destination, str) or not view.destination.strip():
+        return _result("REQ", Status.FAIL, f"action.destination must be a non-empty string (got {shown(view.destination)})")
     amount = view.amount
     if amount is None:
         return _result("REQ", Status.FAIL, f"action.amount must be a number (got {shown(view.raw_amount)})")

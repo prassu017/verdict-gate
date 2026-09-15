@@ -34,13 +34,13 @@ A ledger (Upstash Redis on Vercel, in-memory locally) maps `request_id` to a can
 
 ## Answers
 
-**1. Assumptions.** USD only (other currencies DEFER). The caller supplies a trustworthy `evaluated_at`. Balance carries no timestamp, so it counts as current. Boundaries pass: exactly 30:00 old, exactly $50,000, amount equal to balance. Timestamps need a timezone.
+**1. Assumptions.** USD only (other currencies DEFER). The caller supplies a trustworthy `evaluated_at`. Balance carries no timestamp, so it counts as current. Boundaries pass: exactly 30:00 old, exactly $50,000, amount equal to balance. Timestamps need a timezone. Requests need a `request_id`, a destination and a positive amount; anything else HALTs.
 
 **2. DEFER vs REFER.** DEFER means facts are missing, and the same caller can fix that with better evidence. REFER means authority is missing; no evidence lets this service approve.
 
 **3. Precedence.** Authority limits who may say yes, not who may say no. A determinable HALT beats REFER, and REFER beats DEFER because fresh evidence still couldn't yield ADMIT. Stale evidence decides nothing, so stale "suspended" DEFERs. The ladder is one table, `GATES`, in `evaluator.py`.
 
-**4. Sameness.** Two evaluations are the same when policy version and digest match and the canonical decision inputs match. Those inputs are the fields the rules read, with key order, number spelling and timezone spelling normalized. `decision_id` hashes request_id, inputs and policy. Hypothesis tests check this.
+**4. Sameness.** Two evaluations are the same when policy version and digest match and the canonical decision inputs match. Those inputs are the fields the rules read, with key order, number spelling and timezone spelling normalized (numbers are never rounded). `decision_id` hashes request_id, inputs and policy. Hypothesis tests check this.
 
 **5. Before irreversible production actions.** Server-stamped time; signed evidence with provenance; authenticated callers bound to `actor.id`; a durable append-only audit log; reviewed, signed policy releases; the executor redeeming each `decision_id` exactly once; alerting on unusual HALT or DEFER rates; an independent review of the rules.
 

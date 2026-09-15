@@ -7,6 +7,7 @@ evaluate()        the assignment's evaluate(request) -> decision, with an in-pro
 
 from __future__ import annotations
 
+import copy
 from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any
@@ -140,7 +141,7 @@ class DecisionService:
             return decision  # nothing to key a retry on; gate 1 has already halted it
 
         payload = fingerprint(request)
-        fresh = LedgerRecord(request_id, payload, decision)
+        fresh = LedgerRecord(request_id, payload, copy.deepcopy(decision))  # the caller keeps `decision`
         try:
             existing = self.ledger.get(request_id)
             if existing is None:
@@ -152,7 +153,7 @@ class DecisionService:
             return self._ledger_unavailable(decision, error)
 
         if existing.payload_fingerprint == payload:
-            return {**existing.decision, "replayed": True}
+            return {**copy.deepcopy(dict(existing.decision)), "replayed": True}
         return self._conflict(request_id, payload, existing, decision, active)
 
     @staticmethod

@@ -44,8 +44,15 @@ def to_decimal(value: Any) -> Decimal | None:
 
 
 def format_decimal(number: Decimal) -> str:
-    text = format(number.normalize(), "f")
-    return "0" if text == "-0" else text
+    """Exact plain-notation text with trailing fractional zeros removed.
+
+    Deliberately avoids Decimal.normalize(), which rounds to the context precision and would
+    let two different amounts share one canonical form (and one decision_id).
+    """
+    text = format(number, "f")
+    if "." in text:
+        text = text.rstrip("0").rstrip(".")
+    return "0" if text in ("-0", "") else text
 
 
 def canonical_json(value: Any) -> str:

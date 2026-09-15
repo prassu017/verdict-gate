@@ -41,6 +41,20 @@ def test_any_payload_change_conflicts_even_if_the_verdict_would_not_change():
     assert svc.evaluate(make({"actor.id": "agent-99"}))["reason_code"] == "IDEMPOTENCY_CONFLICT"
 
 
+def test_callers_cannot_mutate_the_recorded_decision():
+    svc = service()
+    first = svc.evaluate(make())
+    first["verdict"] = "HALT"
+    first["checks"][0]["status"] = "FAIL"
+
+    replay = svc.evaluate(make())
+    assert replay["verdict"] == "ADMIT"
+    assert replay["checks"][0]["status"] == "PASS"
+
+    replay["checks"][0]["detail"] = "tampered"
+    assert svc.evaluate(make())["checks"][0]["detail"] != "tampered"
+
+
 def test_policy_change_does_not_change_a_retried_decision():
     svc = service()
     request = make({"request_id": "req-3001", "action.amount": 30000})
