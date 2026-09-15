@@ -1,0 +1,6 @@
+tests/
+.github/
+.hypothesis/
+.pytest_cache/
+**/__pycache__/
+*.zip
