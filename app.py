@@ -78,4 +78,7 @@ def health_endpoint():
     return {"status": "ok", "ledger": type(ledger).__name__, "policy": CURRENT_POLICY.version}
 
 
-app.mount("/", StaticFiles(directory=Path(__file__).resolve().parent / "public", html=True), name="console")
+# Locally the app serves the console itself; on Vercel public/ is served by the CDN and isn't bundled.
+CONSOLE_DIR = Path(__file__).resolve().parent / "public"
+if CONSOLE_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=CONSOLE_DIR, html=True), name="console")
