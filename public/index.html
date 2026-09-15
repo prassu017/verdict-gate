@@ -47,10 +47,12 @@ body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);
 .wrap{max-width:1240px;margin-inline:auto}
 h1,h2,h3,h4{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
 h2{font-size:1.6rem;font-weight:700}
-h3{font-size:1.15rem;font-weight:600}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
 p{margin:0}
 a{color:var(--accent)}
 code,.mono{font-family:var(--mono)}
+p code,li code,td code{font-size:.86em;background:var(--sunk);padding:.05em .35em;border-radius:3px}
 button{font:inherit}
 [hidden]{display:none!important}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -60,7 +62,9 @@ button{font:inherit}
 .vc-defer{--vc:var(--defer);--vbg:var(--defer-bg)}
 .vc-refer{--vc:var(--refer);--vbg:var(--refer-bg)}
 .v{font-family:var(--mono);font-weight:500;font-size:.76rem;letter-spacing:.05em;padding:.1em .5em;border-radius:3px;white-space:nowrap;display:inline-block;color:var(--vc);background:var(--vbg)}
+.hint{font-size:.8rem;color:var(--muted)}
 
+/* header */
 .bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding-block:14px;border-bottom:1px solid var(--rule)}
 .brand{display:flex;align-items:center;gap:10px}
 .brand b{font-family:var(--display);font-size:1.4rem;font-weight:700;letter-spacing:.01em}
@@ -69,7 +73,7 @@ button{font:inherit}
 .lamps i{width:7px;height:7px;border-radius:50%;display:block}
 .lamps i:nth-child(1){background:var(--admit)} .lamps i:nth-child(2){background:var(--halt)}
 .lamps i:nth-child(3){background:var(--defer)} .lamps i:nth-child(4){background:var(--refer)}
-[role="tablist"]{display:flex;gap:2px;background:var(--sunk);padding:3px;border-radius:6px}
+[role="tablist"]{display:flex;flex-wrap:wrap;gap:2px;background:var(--sunk);padding:3px;border-radius:6px}
 .tab{padding:6px 14px;border:0;border-radius:4px;background:transparent;color:var(--muted);cursor:pointer;font-weight:500;font-size:.9rem}
 .tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 0 var(--rule)}
 .status{margin-left:auto;display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--mono);font-size:.7rem;color:var(--muted);align-items:center}
@@ -77,66 +81,107 @@ button{font:inherit}
 .status .dot.ok{background:var(--admit)} .status .dot.warn{background:var(--defer)} .status .dot.bad{background:var(--halt)}
 .banner{margin-top:14px;border:1px solid var(--halt);background:var(--halt-bg);color:var(--ink);padding:10px 14px;border-radius:4px;font-size:.88rem}
 
-.flow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;padding-block:22px 0;align-items:start}
-.ladder{display:grid}
-.rung,.spine,.rowc{display:grid;grid-template-columns:minmax(0,1fr) 70px 96px;align-items:center}
-.spine i{grid-column:1;justify-self:center;display:block;width:0;height:18px;border-left:2px solid var(--rule);transition:border-color .2s}
-.spine.lit i{border-color:var(--ink)}
-.node{cursor:pointer;background:var(--surface);border:1px solid var(--rule);border-radius:4px;color:var(--ink);text-align:left}
-.node:hover{border-color:var(--muted)}
-.node[aria-pressed="true"]{outline:2px solid var(--accent);outline-offset:2px}
-.req{grid-column:1;justify-self:center;padding:8px 16px;display:grid;gap:1px;text-align:center;background:var(--sunk)}
-.req b{font-weight:600;font-size:.9rem}
-.req small{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
-.gate{border:1px solid var(--rule);border-radius:5px;background:var(--surface);padding:10px 12px;display:grid;gap:8px;transition:border-color .2s,box-shadow .2s,opacity .2s}
-.gate-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.gate-h .mono{font-size:.66rem;color:var(--muted);letter-spacing:.08em}
-.gate-h b{font-family:var(--display);font-size:1.08rem;font-weight:600}
-.checks{display:flex;flex-wrap:wrap;gap:6px}
-.chk{display:inline-flex;align-items:center;gap:6px;padding:4px 5px 4px 8px;font-size:.8rem}
-.chk .pid{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
-.stat{font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;padding:1px 5px;border-radius:2px;border:1px solid transparent}
-[data-s="PASS"] .stat{color:var(--admit);background:var(--admit-bg)}
-[data-s="FAIL"] .stat{color:var(--halt);background:var(--halt-bg)}
-[data-s="UNKNOWN"] .stat{color:var(--defer);background:var(--defer-bg)}
-[data-s="N/A"] .stat{color:var(--muted);border-color:var(--rule);border-style:dashed}
-.exit{height:0;border-top:1.5px dashed var(--rule);position:relative;margin-inline:6px;transition:border-color .2s}
-.exit span{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);font-family:var(--mono);font-size:.64rem;color:var(--muted);white-space:nowrap}
-.verdict{font-family:var(--mono);font-weight:500;letter-spacing:.06em;font-size:.8rem;padding:9px 0;text-align:center;color:var(--vc);opacity:.45;transition:opacity .2s,box-shadow .2s,background .2s}
-.verdict.on{opacity:1;background:var(--vbg);border-color:var(--vc);box-shadow:0 0 0 3px var(--vbg)}
-.rowc .verdict{grid-column:1;justify-self:center;width:150px}
-.rung.passed .gate{border-color:var(--ink)}
-.rung.decisive .gate{border-color:var(--vc);box-shadow:0 0 0 3px var(--vbg)}
-.rung.decisive .exit{border-top:2px solid var(--vc)}
-.rung.decisive .exit span{color:var(--vc)}
-.rung.unreached .gate{opacity:.6}
-.outcome{margin-top:18px;border:1px solid var(--rule);border-left:4px solid var(--vc);background:var(--surface);padding:12px 16px;display:grid;gap:4px}
-.outcome .big{font-family:var(--mono);font-weight:500;font-size:1.25rem;letter-spacing:.06em;color:var(--vc)}
-.outcome .meta{font-family:var(--mono);font-size:.7rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px;word-break:break-all}
-.hint{font-size:.8rem;color:var(--muted)}
-
-.inspector{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px;display:grid;gap:14px;align-content:start}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
-.fields label,.row2 label{display:grid;gap:3px;font-size:.7rem;color:var(--muted);font-family:var(--mono)}
-.row2{display:grid;grid-template-columns:1.3fr 1fr;gap:10px 12px}
-input,select,textarea{font:inherit;font-size:.85rem;color:var(--ink);background:var(--ground);border:1px solid var(--rule);border-radius:4px;padding:6px 8px;width:100%;min-width:0}
-textarea{font-family:var(--mono);font-size:.76rem;line-height:1.5;min-height:290px;resize:vertical;tab-size:2}
-textarea.bad{border-color:var(--halt)}
-.jsonmsg{font-family:var(--mono);font-size:.7rem;color:var(--muted);min-height:1.1em}
-.jsonmsg.bad{color:var(--halt)}
-.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+/* buttons & inputs */
 .btn{font-weight:600;font-size:.84rem;padding:7px 14px;border-radius:4px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
 .btn:hover{border-color:var(--muted)}
 .btn:disabled{opacity:.55;cursor:progress}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn.sm{font-size:.74rem;padding:3px 9px;font-weight:500}
+.btn .play{display:inline-block;width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-right:8px;vertical-align:0}
+input,select,textarea{font:inherit;font-size:.85rem;color:var(--ink);background:var(--ground);border:1px solid var(--rule);border-radius:4px;padding:6px 8px;width:100%;min-width:0}
+textarea{font-family:var(--mono);font-size:.76rem;line-height:1.5;min-height:280px;resize:vertical;tab-size:2}
+textarea.bad{border-color:var(--halt)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* flow canvas */
+.canvas-card{margin-top:22px;border:1px solid var(--rule);border-radius:8px;background:
+  radial-gradient(circle, var(--rule) 1px, transparent 1.2px) 0 0/22px 22px, var(--surface);overflow:hidden}
+.canvas-bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--rule);background:var(--surface)}
+.canvas-bar .title{font-family:var(--display);font-weight:600;font-size:1.05rem}
+.canvas-bar .hint{margin-left:auto}
+.canvas-scroll{overflow-x:auto}
+#canvas{display:block;width:100%;min-width:860px;height:auto;color:var(--muted)}
+.edge{fill:none;stroke:var(--rule);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:1 7;transition:stroke .25s}
+.edge.done{stroke:var(--muted)}
+.edge.branch.done{stroke:var(--vc)}
+.edge.active{stroke:var(--accent);animation:flow .5s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-16}}
+.fan{stroke:var(--rule);stroke-width:1.2;stroke-dasharray:2 4}
+.wf-node{cursor:pointer;outline:none}
+.wf-node .ring{fill:var(--surface);stroke:var(--rule);stroke-width:2;transition:stroke .25s,fill .25s}
+.wf-node:hover .ring{stroke:var(--muted)}
+.wf-node .sel{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:4 4;opacity:0}
+.wf-node.selected .sel,.wf-node:focus-visible .sel{opacity:1}
+.wf-node .spin{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-dasharray:36 400;opacity:0;transform-box:fill-box;transform-origin:center}
+.wf-node.running .spin{opacity:1;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glyph{font-family:var(--display);font-size:26px;font-weight:700;fill:var(--muted);text-anchor:middle;dominant-baseline:central;transition:fill .25s}
+.glyph.code{font-family:var(--mono);font-size:17px;font-weight:500}
+.lbl{font:600 13px var(--body);fill:var(--ink);text-anchor:middle}
+.sub{font:11px var(--mono);fill:var(--muted);text-anchor:middle}
+.badge{opacity:0;transition:opacity .2s}
+.badge circle{fill:var(--admit)}
+.badge text{fill:var(--surface);font:700 11px var(--body);text-anchor:middle;dominant-baseline:central}
+.wf-node.passed .ring{stroke:var(--admit)}
+.wf-node.passed .glyph{fill:var(--admit)}
+.wf-node.passed .badge,.wf-node.decisive .badge{opacity:1}
+.wf-node.decisive .ring{stroke:var(--vc);fill:var(--vbg);stroke-width:2.5}
+.wf-node.decisive .glyph{fill:var(--vc)}
+.wf-node.decisive .badge circle{fill:var(--vc)}
+.wf-node.unreached{opacity:.4}
+.verdict .ring{stroke:var(--vc);stroke-opacity:.35}
+.vword{font:500 10px var(--mono);fill:var(--vc);letter-spacing:.05em;text-anchor:middle;dominant-baseline:central;opacity:.65}
+.vword.big{font-size:12.5px}
+.verdict.on .ring{fill:var(--vbg);stroke-opacity:1;stroke-width:2.5}
+.verdict.on .vword{opacity:1}
+.pulse{fill:none;stroke:var(--vc);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center}
+.verdict.on .pulse{animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(1.55)}}
+.sat{cursor:pointer;outline:none}
+.sat circle{fill:var(--surface);stroke:var(--rule);stroke-width:1.5;transition:fill .2s,stroke .2s;transform-box:fill-box;transform-origin:center}
+.sat text{font:500 9.5px var(--mono);fill:var(--muted);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.sat[data-s="PASS"] circle{fill:var(--admit-bg);stroke:var(--admit)} .sat[data-s="PASS"] text{fill:var(--admit)}
+.sat[data-s="FAIL"] circle{fill:var(--halt-bg);stroke:var(--halt)} .sat[data-s="FAIL"] text{fill:var(--halt)}
+.sat[data-s="UNKNOWN"] circle{fill:var(--defer-bg);stroke:var(--defer)} .sat[data-s="UNKNOWN"] text{fill:var(--defer)}
+.sat[data-s="N/A"] circle{stroke-dasharray:3 3}
+.sat.dim{opacity:.45}
+.sat.pop circle{animation:pop .38s ease-out}
+@keyframes pop{0%{transform:scale(.35)}70%{transform:scale(1.18)}100%{transform:scale(1)}}
+.sat.selected circle,.sat:focus-visible circle{stroke:var(--accent);stroke-width:3}
+.packet{fill:var(--accent);opacity:0;filter:drop-shadow(0 0 5px var(--accent))}
+.packet.show{opacity:1}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:10px 14px;border-top:1px solid var(--rule);background:var(--surface);font-size:.74rem;color:var(--muted);align-items:center}
+.legend .key{display:inline-flex;align-items:center;gap:5px}
+.legend .key i{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--rule);background:var(--surface);display:inline-block}
+.legend .key.pass i{background:var(--admit-bg);border-color:var(--admit)}
+.legend .key.fail i{background:var(--halt-bg);border-color:var(--halt)}
+.legend .key.unk i{background:var(--defer-bg);border-color:var(--defer)}
+.legend .key.na i{border-style:dashed}
+.legend .mono{font-size:.7rem}
+
+.outcome{margin-top:16px;border:1px solid var(--rule);border-left:4px solid var(--vc);background:var(--surface);padding:12px 16px;display:grid;gap:4px;border-radius:4px}
+.outcome .big{font-family:var(--mono);font-weight:500;font-size:1.25rem;letter-spacing:.06em;color:var(--vc)}
+.outcome .meta{font-family:var(--mono);font-size:.7rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px;word-break:break-all}
+.panes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:16px;align-items:start}
+.pane{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px;display:grid;gap:14px;align-content:start}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.fields label,.row2 label{display:grid;gap:3px;font-size:.7rem;color:var(--muted);font-family:var(--mono)}
+.row2{display:grid;grid-template-columns:1.3fr 1fr;gap:10px 12px}
+.jsonmsg{font-family:var(--mono);font-size:.7rem;color:var(--muted);min-height:1.1em}
+.jsonmsg.bad{color:var(--halt)}
 .rule{font-size:.95rem;border-left:3px solid var(--rule);padding-left:12px}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.86rem;align-items:baseline}
 .kv > span:nth-child(odd){font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.stat{font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;padding:1px 5px;border-radius:2px;border:1px solid transparent}
+[data-s="PASS"] > .stat{color:var(--admit);background:var(--admit-bg)}
+[data-s="FAIL"] > .stat{color:var(--halt);background:var(--halt-bg)}
+[data-s="UNKNOWN"] > .stat{color:var(--defer);background:var(--defer-bg)}
+[data-s="N/A"] > .stat{color:var(--muted);border-color:var(--rule);border-style:dashed}
 pre{margin:0;background:var(--ground);border:1px solid var(--rule);border-radius:4px;padding:12px;overflow-x:auto;font-family:var(--mono);font-size:.72rem;line-height:1.5;max-height:420px}
 
+/* tests & retries */
 .pagehead{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:end;justify-content:space-between;padding-block:22px 12px}
-.pagehead p{color:var(--muted);max-width:70ch;font-size:.9rem}
+.pagehead p{color:var(--muted);max-width:72ch;font-size:.9rem}
 .progress{height:4px;background:var(--sunk);border-radius:2px;overflow:hidden}
 .progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s}
 .summary{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;padding-block:10px;font-size:.86rem;min-height:2.6em}
@@ -151,13 +196,16 @@ thead th{border-top:0;font-family:var(--mono);font-weight:500;font-size:.66rem;l
 td.id{font-family:var(--mono);font-size:.74rem;color:var(--muted);white-space:nowrap}
 td .cat{font-size:.72rem;color:var(--muted)}
 tr.running td{background:var(--sunk)}
-.strip{display:inline-grid;grid-template-columns:repeat(5,14px);gap:3px;vertical-align:middle}
-.strip i{display:block;height:14px;border-radius:2px;background:var(--sunk);border:1px solid var(--rule)}
-.strip i.p{background:var(--muted);border-color:var(--muted);opacity:.45}
+.strip{display:inline-flex;gap:0;align-items:center;vertical-align:middle}
+.strip i{display:block;width:13px;height:13px;border-radius:50%;background:var(--surface);border:1.5px solid var(--rule)}
+.strip b{display:block;width:6px;height:0;border-top:1.5px dotted var(--rule)}
+.strip i.p{background:var(--admit-bg);border-color:var(--admit)}
 .strip i.x{background:var(--vc);border-color:var(--vc)}
 .res{font-family:var(--mono);font-size:.74rem;white-space:nowrap}
 .res.ok{color:var(--admit)} .res.bad{color:var(--halt)} .res.wait{color:var(--muted)}
-
+.tag{font-family:var(--mono);font-size:.66rem;padding:1px 6px;border-radius:3px;border:1px solid var(--rule);color:var(--muted)}
+.tag.warn{color:var(--halt);border-color:currentColor}
+.tag.info{color:var(--accent);border-color:currentColor}
 .scen{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px;display:grid;gap:10px;align-content:start}
 .card-h{display:flex;gap:10px;justify-content:space-between;align-items:start}
@@ -167,20 +215,46 @@ ol.calls li{border-top:1px solid var(--rule);padding-block:8px;display:grid;gap:
 .call-l{font-size:.8rem;font-weight:600}
 .call-req{font-family:var(--mono);font-size:.7rem;color:var(--muted);word-break:break-all}
 .call-res{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-family:var(--mono);font-size:.72rem}
-.tag{font-family:var(--mono);font-size:.66rem;padding:1px 6px;border-radius:3px;border:1px solid var(--rule);color:var(--muted)}
-.tag.warn{color:var(--halt);border-color:currentColor}
-.tag.info{color:var(--accent);border-color:currentColor}
 .outc{font-size:.86rem;border-top:1px solid var(--rule);padding-top:8px}
 .ledger{padding-top:22px;display:grid;gap:10px}
+
+/* design tab */
+.design{display:grid;gap:34px;padding-bottom:10px}
+.design section{display:grid;gap:14px}
+.design .lead{color:var(--muted);max-width:72ch}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.fact{background:var(--surface);padding:14px 16px;display:grid;gap:2px;align-content:start}
+.fact b{font-family:var(--display);font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums}
+.fact span{font-size:.8rem;color:var(--muted)}
+figure{margin:0;display:grid;gap:10px}
+figure .frame{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px;overflow-x:auto}
+figure svg{display:block;width:100%;min-width:720px;height:auto;color:var(--muted)}
+figcaption{font-size:.84rem;color:var(--muted);max-width:80ch}
+.d-box{fill:var(--surface);stroke:var(--ink);stroke-width:1.2}
+.d-soft{fill:var(--sunk);stroke:var(--rule);stroke-width:1}
+.d-acc{fill:var(--surface);stroke:var(--accent);stroke-width:2}
+.d-admit{fill:var(--admit-bg);stroke:var(--admit);stroke-width:1.5}
+.d-halt{fill:var(--halt-bg);stroke:var(--halt);stroke-width:1.5}
+.d-title{fill:var(--ink);font-family:var(--display);font-weight:600;font-size:16px;text-anchor:middle}
+.d-mono{fill:var(--muted);font-family:var(--mono);font-size:10.5px;text-anchor:middle}
+.d-lab{fill:var(--muted);font-family:var(--mono);font-size:10.5px}
+.d-line{stroke:var(--muted);stroke-width:1.3;fill:none}
+.d-dash{stroke:var(--muted);stroke-width:1.3;fill:none;stroke-dasharray:5 4}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.qa article{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;display:grid;gap:8px;align-content:start}
+.qa .qn{font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.06em}
+.qa ul{margin:0;padding-left:1.1rem;display:grid;gap:5px;font-size:.9rem}
+.qa p{font-size:.9rem}
+.ladder-list{margin:0;padding-left:1.2rem;display:grid;gap:4px;font-size:.9rem}
+
 footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
 
-@media (max-width:980px){.flow,.scen{grid-template-columns:1fr}}
+@media (max-width:980px){.panes,.scen,.qa{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){
-  .rung,.spine,.rowc{grid-template-columns:minmax(0,1fr) 30px 70px}
-  .exit span{display:none}
   .fields,.row2{grid-template-columns:1fr}
   .status{margin-left:0}
-  .rowc .verdict{width:120px}
+  .canvas-bar .hint{margin-left:0}
+  .facts{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -193,64 +267,67 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-si
       <button class="tab" role="tab" id="tab-flow" aria-selected="true" aria-controls="view-flow" data-tab="flow">Flow</button>
       <button class="tab" role="tab" id="tab-tests" aria-selected="false" aria-controls="view-tests" data-tab="tests">Test run</button>
       <button class="tab" role="tab" id="tab-retries" aria-selected="false" aria-controls="view-retries" data-tab="retries">Retries</button>
+      <button class="tab" role="tab" id="tab-design" aria-selected="false" aria-controls="view-design" data-tab="design">Design &amp; answers</button>
     </div>
     <div class="status" aria-live="polite"><span><span class="dot" id="apiDot"></span><span id="apiText">connecting to API…</span></span><span id="ledgerText"></span></div>
   </header>
   <div class="banner" id="banner" role="alert" hidden></div>
 
+  <!-- FLOW -->
   <main id="view-flow" role="tabpanel" aria-labelledby="tab-flow">
-    <div class="flow">
-      <div>
-        <div class="ladder" id="ladder">
-          <div class="rowc"><button class="node req" data-node="request" aria-pressed="true"><b id="reqTitle">Request</b><small id="reqSub">loading…</small></button></div>
-          <div class="spine" id="sp-0"><i></i></div>
-        </div>
-        <div class="outcome vc-admit" id="outcome" aria-live="polite" style="visibility:hidden">
-          <span class="big" id="outVerdict">—</span>
-          <p id="outReason"></p>
-          <div class="meta"><span id="outCode"></span><span id="outId"></span><span id="outPolicy"></span></div>
-        </div>
-        <p class="hint" style="margin-top:10px">Click any node to inspect it. The request node opens an editor; every change is sent to <code>POST /api/decide</code> as you type.</p>
+    <div class="canvas-card">
+      <div class="canvas-bar">
+        <span class="title">Decision workflow</span>
+        <button class="btn primary" id="runBtn"><span class="play" aria-hidden="true"></span>Execute</button>
+        <span class="hint">Click a circle to inspect it. Edits below re-run instantly; Execute replays the animation.</span>
       </div>
-
-      <aside class="inspector" aria-label="Inspector">
-        <div id="panel-request">
-          <div style="display:grid;gap:14px">
-            <div><span class="eyebrow">Expanded node · request</span><h3 style="margin-top:2px">Edit the proposed action</h3></div>
-            <div class="row2">
-              <label for="preset">Load example<select id="preset"></select></label>
-              <label for="policy">Policy version<select id="policy"></select></label>
-            </div>
-            <div class="fields">
-              <label for="f-rid">request_id<input id="f-rid" type="text"></label>
-              <label for="f-role">actor.role<select id="f-role"><option>finance_agent</option><option>support_agent</option><option>ops_agent</option><option value="__missing__">(missing)</option></select></label>
-              <label for="f-type">action.type<select id="f-type"><option>transfer_funds</option><option>delete_vendor</option><option>refund_customer</option><option value="__missing__">(missing)</option></select></label>
-              <label for="f-amount">action.amount<input id="f-amount" type="number" step="0.01"></label>
-              <label for="f-currency">action.currency<select id="f-currency"><option>USD</option><option>EUR</option></select></label>
-              <label for="f-balance">evidence.account_balance<input id="f-balance" type="number" step="0.01" placeholder="missing"></label>
-              <label for="f-status">evidence.vendor_status<select id="f-status"><option>approved</option><option>pending</option><option>suspended</option><option value="__missing__">(missing)</option></select></label>
-              <label for="f-age">Vendor evidence age (min)<input id="f-age" type="number" step="1" placeholder="missing"></label>
-            </div>
-            <label for="json" class="eyebrow" style="display:grid;gap:4px">Request JSON
-              <textarea id="json" spellcheck="false"></textarea>
-            </label>
-            <div class="jsonmsg" id="jsonMsg">Valid JSON</div>
-            <div class="actions">
-              <button class="btn primary" id="evalBtn">Evaluate</button>
-              <button class="btn" id="resetBtn">Reset to example</button>
-            </div>
-            <p class="hint">This tab uses <code>/api/decide</code>, which doesn't record, so you can edit freely. The Retries tab uses <code>/api/evaluate</code> and its ledger.</p>
-          </div>
+      <div class="canvas-scroll" id="canvasHost"></div>
+      <div class="legend">
+        <span class="key pass"><i></i>PASS</span><span class="key fail"><i></i>FAIL</span><span class="key unk"><i></i>UNKNOWN</span><span class="key na"><i></i>N/A</span>
+        <span class="mono">P6 action covered · P1 role allowed · REQ request valid · P3 vendor approved · P5 within balance · P2 within limit · P4 evidence fresh · EV evidence complete</span>
+      </div>
+    </div>
+    <div class="outcome vc-admit" id="outcome" aria-live="polite" style="visibility:hidden">
+      <span class="big" id="outVerdict">—</span>
+      <p id="outReason"></p>
+      <div class="meta"><span id="outCode"></span><span id="outId"></span><span id="outPolicy"></span></div>
+    </div>
+    <div class="panes">
+      <section class="pane" id="panel-request" aria-label="Request editor">
+        <div><span class="eyebrow">Request</span><h3 style="margin-top:2px">Edit the proposed action</h3></div>
+        <div class="row2">
+          <label for="preset">Load example<select id="preset"></select></label>
+          <label for="policy">Policy version<select id="policy"></select></label>
         </div>
-        <div id="panel-other" hidden></div>
-      </aside>
+        <div class="fields">
+          <label for="f-rid">request_id<input id="f-rid" type="text"></label>
+          <label for="f-role">actor.role<select id="f-role"><option>finance_agent</option><option>support_agent</option><option>ops_agent</option><option value="__missing__">(missing)</option></select></label>
+          <label for="f-type">action.type<select id="f-type"><option>transfer_funds</option><option>delete_vendor</option><option>refund_customer</option><option value="__missing__">(missing)</option></select></label>
+          <label for="f-amount">action.amount<input id="f-amount" type="number" step="0.01"></label>
+          <label for="f-currency">action.currency<select id="f-currency"><option>USD</option><option>EUR</option></select></label>
+          <label for="f-balance">evidence.account_balance<input id="f-balance" type="number" step="0.01" placeholder="missing"></label>
+          <label for="f-status">evidence.vendor_status<select id="f-status"><option>approved</option><option>pending</option><option>suspended</option><option value="__missing__">(missing)</option></select></label>
+          <label for="f-age">Vendor evidence age (min)<input id="f-age" type="number" step="1" placeholder="missing"></label>
+        </div>
+        <label for="json" class="eyebrow" style="display:grid;gap:4px">Request JSON
+          <textarea id="json" spellcheck="false"></textarea>
+        </label>
+        <div class="jsonmsg" id="jsonMsg">Valid JSON</div>
+        <div class="actions">
+          <button class="btn primary" id="evalBtn">Evaluate</button>
+          <button class="btn" id="resetBtn">Reset to example</button>
+        </div>
+        <p class="hint">Uses <code>POST /api/decide</code>, which doesn't record, so you can edit freely. The Retries tab uses <code>/api/evaluate</code> and its ledger.</p>
+      </section>
+      <section class="pane" id="nodePane" aria-live="polite" aria-label="Selected node"></section>
     </div>
   </main>
 
+  <!-- TESTS -->
   <section id="view-tests" role="tabpanel" aria-labelledby="tab-tests" hidden>
     <div class="pagehead">
       <div style="display:grid;gap:4px"><h2>Test run</h2><p>Every case in <code>verdict_gate/cases/*.json</code>, sent to the live API. The same files parametrize pytest in CI, so this list can't drift from what's tested.</p></div>
-      <button class="btn primary" id="runAll">Run all cases</button>
+      <button class="btn primary" id="runAll"><span class="play" aria-hidden="true"></span>Run all cases</button>
     </div>
     <div class="progress"><i id="prog"></i></div>
     <div class="summary" id="summary"></div>
@@ -261,10 +338,11 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-si
     </table></div>
   </section>
 
+  <!-- RETRIES -->
   <section id="view-retries" role="tabpanel" aria-labelledby="tab-retries" hidden>
     <div class="pagehead">
       <div style="display:grid;gap:4px"><h2>Retries &amp; replay</h2><p>The assignment's four failure scenarios, sent to <code>POST /api/evaluate</code> against the real ledger. Each run uses fresh request ids so earlier runs can't interfere.</p></div>
-      <button class="btn primary" id="runScen">Run all scenarios</button>
+      <button class="btn primary" id="runScen"><span class="play" aria-hidden="true"></span>Run all scenarios</button>
     </div>
     <div class="scen" id="scen"></div>
     <div class="ledger">
@@ -273,6 +351,158 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-si
         <thead><tr><th>request_id</th><th>Payload fingerprint</th><th>decision_id</th><th>Verdict</th><th>Policy</th></tr></thead>
         <tbody id="ledgerRows"></tbody>
       </table></div>
+    </div>
+  </section>
+
+  <!-- DESIGN -->
+  <section id="view-design" role="tabpanel" aria-labelledby="tab-design" hidden>
+    <div class="pagehead">
+      <div style="display:grid;gap:4px"><h2>Design &amp; answers</h2><p>How the service is built and deployed, and the assignment's questions answered in full. The README carries the same answers in under 500 words.</p></div>
+    </div>
+    <div class="design">
+      <div class="facts">
+        <div class="fact"><b>80</b><span>automated tests: pytest and Hypothesis, run by GitHub Actions on every push</span></div>
+        <div class="fact"><b>26</b><span>example cases, shared by the test suite and the Test run tab</span></div>
+        <div class="fact"><b>4</b><span>gates in one precedence table, fed by 8 checks</span></div>
+        <div class="fact"><b>0</b><span>clock reads, random values or LLM calls inside a decision</span></div>
+      </div>
+
+      <section>
+        <div><span class="eyebrow">Infrastructure</span><h3>What runs where</h3></div>
+        <figure>
+          <div class="frame">
+          <svg viewBox="0 0 910 420" role="img" aria-label="Infrastructure: the browser loads the console from Vercel's CDN and calls the Vercel Python function; agents post requests to the same function. The function calls the verdict_gate package and reads and writes the Upstash Redis ledger. Pushes to GitHub run the tests in GitHub Actions and deploy through Vercel's Git integration.">
+            <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+            <rect class="d-box" x="30" y="40" width="190" height="60" rx="6"/><text class="d-title" x="125" y="66">Console (browser)</text><text class="d-mono" x="125" y="86">public/index.html</text>
+            <rect class="d-box" x="30" y="180" width="190" height="60" rx="6"/><text class="d-title" x="125" y="206">Agent / caller</text><text class="d-mono" x="125" y="226">JSON action request</text>
+            <rect class="d-soft" x="330" y="40" width="220" height="60" rx="6"/><text class="d-title" x="440" y="66">Vercel CDN</text><text class="d-mono" x="440" y="86">static console files</text>
+            <rect class="d-box" x="330" y="170" width="220" height="80" rx="6"/><text class="d-title" x="440" y="198">Vercel Function</text><text class="d-mono" x="440" y="218">app.py · FastAPI</text><text class="d-mono" x="440" y="236">Python 3.12 · iad1</text>
+            <rect class="d-acc" x="660" y="170" width="220" height="80" rx="6"/><text class="d-title" x="770" y="198">verdict_gate</text><text class="d-mono" x="770" y="218">decide(): 8 checks → GATES</text><text class="d-mono" x="770" y="236">policies · cases/*.json</text>
+            <rect class="d-soft" x="660" y="40" width="220" height="60" rx="6"/><text class="d-title" x="770" y="66">Upstash Redis</text><text class="d-mono" x="770" y="86">retry ledger · SET NX · iad1</text>
+            <rect class="d-soft" x="30" y="330" width="190" height="60" rx="6"/><text class="d-title" x="125" y="356">GitHub Actions</text><text class="d-mono" x="125" y="376">pytest · 80 tests</text>
+            <rect class="d-box" x="330" y="330" width="220" height="60" rx="6"/><text class="d-title" x="440" y="356">GitHub</text><text class="d-mono" x="440" y="376">prassu017/verdict-gate</text>
+            <rect class="d-soft" x="660" y="330" width="220" height="60" rx="6"/><text class="d-title" x="770" y="356">Vercel Git deploy</text><text class="d-mono" x="770" y="376">build on push to main</text>
+
+            <line class="d-line" x1="220" y1="70" x2="328" y2="70" marker-end="url(#ah)"/><text class="d-lab" x="274" y="62" text-anchor="middle">GET /</text>
+            <line class="d-line" x1="200" y1="100" x2="350" y2="168" marker-end="url(#ah)"/><text class="d-lab" x="262" y="148" text-anchor="end">fetch /api/*</text>
+            <line class="d-line" x1="220" y1="210" x2="328" y2="210" marker-end="url(#ah)"/><text class="d-lab" x="274" y="202" text-anchor="middle">POST</text><text class="d-lab" x="274" y="226" text-anchor="middle">/api/evaluate</text>
+            <line class="d-line" x1="550" y1="210" x2="658" y2="210" marker-end="url(#ah)"/><text class="d-lab" x="604" y="202" text-anchor="middle">decide()</text>
+            <line class="d-line" x1="550" y1="182" x2="680" y2="102" marker-start="url(#ah)" marker-end="url(#ah)"/><text class="d-lab" x="598" y="140" text-anchor="end">GET · SET NX</text>
+            <line class="d-line" x1="330" y1="360" x2="222" y2="360" marker-end="url(#ah)"/><text class="d-lab" x="276" y="352" text-anchor="middle">on push</text>
+            <line class="d-line" x1="550" y1="360" x2="658" y2="360" marker-end="url(#ah)"/><text class="d-lab" x="604" y="352" text-anchor="middle">push to main</text>
+            <line class="d-dash" x1="690" y1="330" x2="502" y2="252" marker-end="url(#ah)"/><text class="d-lab" x="590" y="300" text-anchor="end">deploys</text>
+          </svg>
+          </div>
+          <figcaption>All decision logic lives in the <code>verdict_gate</code> package; the FastAPI function is a thin wrapper around it. Redis is only touched by the retry ledger, so the pure <code>decide()</code> path has no network dependency at all.</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <div><span class="eyebrow">Request lifecycle</span><h3>What happens to one <code>POST /api/evaluate</code></h3></div>
+        <figure>
+          <div class="frame">
+          <svg viewBox="0 0 910 310" role="img" aria-label="Request lifecycle: the payload is canonicalized and fingerprinted, the ledger is looked up by request_id. If nothing is recorded the request is decided, stored with SET NX and returned with HTTP 200. If a record exists with the same fingerprint the stored decision is replayed; with a different fingerprint the response is a 409 conflict. A ledger error returns a 503 HALT.">
+            <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+            <rect class="d-box" x="20" y="40" width="150" height="50" rx="25"/><text class="d-mono" x="95" y="69" style="fill:var(--ink)">POST /api/evaluate</text>
+            <rect class="d-box" x="210" y="40" width="180" height="50" rx="6"/><text class="d-title" x="300" y="61">Canonicalize</text><text class="d-mono" x="300" y="79">payload fingerprint</text>
+            <rect class="d-box" x="430" y="40" width="170" height="50" rx="6"/><text class="d-title" x="515" y="61">Ledger lookup</text><text class="d-mono" x="515" y="79">GET request_id</text>
+            <polygon class="d-box" points="690,28 737,65 690,102 643,65"/><text class="d-mono" x="690" y="69" style="fill:var(--ink)">recorded?</text>
+            <rect class="d-acc" x="770" y="40" width="130" height="50" rx="6"/><text class="d-title" x="835" y="61">decide()</text><text class="d-mono" x="835" y="79">8 checks → ladder</text>
+            <rect class="d-box" x="770" y="140" width="130" height="50" rx="6"/><text class="d-title" x="835" y="161">SET NX</text><text class="d-mono" x="835" y="179">first writer wins</text>
+            <rect class="d-admit" x="770" y="240" width="130" height="50" rx="25"/><text class="d-mono" x="835" y="269" style="fill:var(--admit)">200 · decision</text>
+            <rect class="d-soft" x="620" y="140" width="135" height="50" rx="25"/><text class="d-mono" x="687" y="161" style="fill:var(--ink)">200 · replayed</text><text class="d-mono" x="687" y="179">stored decision</text>
+            <rect class="d-halt" x="430" y="240" width="170" height="50" rx="25"/><text class="d-mono" x="515" y="261" style="fill:var(--halt)">409 · HALT</text><text class="d-mono" x="515" y="279">IDEMPOTENCY_CONFLICT</text>
+            <rect class="d-halt" x="210" y="140" width="180" height="50" rx="25"/><text class="d-mono" x="300" y="161" style="fill:var(--halt)">503 · HALT</text><text class="d-mono" x="300" y="179">LEDGER_UNAVAILABLE</text>
+
+            <line class="d-line" x1="170" y1="65" x2="208" y2="65" marker-end="url(#ah2)"/>
+            <line class="d-line" x1="390" y1="65" x2="428" y2="65" marker-end="url(#ah2)"/>
+            <line class="d-line" x1="600" y1="65" x2="641" y2="65" marker-end="url(#ah2)"/>
+            <line class="d-line" x1="737" y1="65" x2="768" y2="65" marker-end="url(#ah2)"/><text class="d-lab" x="752" y="57" text-anchor="middle">no</text>
+            <line class="d-line" x1="835" y1="90" x2="835" y2="138" marker-end="url(#ah2)"/>
+            <line class="d-line" x1="835" y1="190" x2="835" y2="238" marker-end="url(#ah2)"/>
+            <line class="d-line" x1="690" y1="102" x2="690" y2="138" marker-end="url(#ah2)"/><text class="d-lab" x="682" y="124" text-anchor="end">same payload</text>
+            <line class="d-line" x1="668" y1="85" x2="560" y2="238" marker-end="url(#ah2)"/><text class="d-lab" x="596" y="172" text-anchor="end">different payload</text>
+            <line class="d-dash" x1="470" y1="90" x2="340" y2="138" marker-end="url(#ah2)"/><text class="d-lab" x="392" y="112" text-anchor="end">ledger error</text>
+          </svg>
+          </div>
+          <figcaption>A retry never re-decides. A conflicting retry never overwrites the original record. If the ledger can't be reached, nothing is admitted.</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <div><span class="eyebrow">The assignment's questions</span><h3>Answers</h3></div>
+        <div class="qa">
+          <article><span class="qn">QUESTION 1</span><h4>What assumptions did you make?</h4>
+            <ul>
+              <li>Amounts are USD JSON numbers. Other currencies DEFER, because the $50,000 limit can't be applied without exchange-rate evidence.</li>
+              <li><code>evaluated_at</code> is supplied by the caller and trusted; freshness is measured against it, never the server clock.</li>
+              <li><code>account_balance</code> carries no timestamp, so it counts as current at <code>evaluated_at</code>.</li>
+              <li>Boundaries pass: evidence exactly 30:00 old, exactly $50,000, amount equal to balance.</li>
+              <li>Timestamps must be ISO-8601 with a timezone. Amounts must be positive numbers, and a <code>request_id</code> is required.</li>
+              <li>Only <code>"approved"</code> passes the vendor rule. Any other status on fresh evidence is a HALT.</li>
+            </ul>
+          </article>
+          <article><span class="qn">QUESTION 2</span><h4>How did you distinguish DEFER from REFER?</h4>
+            <p><b>DEFER is about missing facts.</b> Evidence is absent, unreadable or stale, so neither ADMIT nor HALT is legitimate yet, and the same caller can fix that by resubmitting fresh evidence under a new <code>request_id</code>.</p>
+            <p><b>REFER is about missing authority.</b> The transfer is above this agent's limit, and no amount of evidence lets this service approve it. The referral carries any open evidence questions along for the approver.</p>
+          </article>
+          <article><span class="qn">QUESTION 3</span><h4>What determines rule precedence?</h4>
+            <p><b>Authority limits who may say yes, not who may say no.</b> Every check runs; the first gate that fires decides:</p>
+            <ol class="ladder-list">
+              <li>Uncovered action, disallowed role or malformed request → HALT</li>
+              <li>Fresh evidence shows an unapproved vendor, or amount exceeds balance → HALT</li>
+              <li>Amount above the limit → REFER</li>
+              <li>Needed evidence missing, unreadable or stale → DEFER</li>
+              <li>Otherwise → ADMIT</li>
+            </ol>
+            <p>So a determinable HALT beats REFER, and REFER beats DEFER because fresh evidence still couldn't yield ADMIT. Stale evidence decides nothing, which is why a stale "suspended" DEFERs. The ladder is one table, <code>GATES</code>, in <code>evaluator.py</code>.</p>
+          </article>
+          <article><span class="qn">QUESTION 4</span><h4>What makes two evaluations "the same"?</h4>
+            <ul>
+              <li>The same policy version and policy digest.</li>
+              <li>The same <b>canonical decision inputs</b>: only the fields the rules read, with key order, number spelling (24000 vs 24000.00) and timezone spelling (Z vs +02:00) normalized. A missing field is different from null.</li>
+              <li><code>decision_id</code> = SHA-256 of <code>request_id</code>, input hash and policy digest, so identical inputs always produce the identical id.</li>
+              <li>For retries, the ledger also compares a fingerprint of the whole canonical payload, so any change under a reused id is caught.</li>
+              <li>Checked by Hypothesis (400 random requests, shuffled keys) and a test that fails if <code>decide()</code> reads the clock.</li>
+            </ul>
+          </article>
+          <article><span class="qn">QUESTION 5</span><h4>What would have to change before you trusted it in front of an irreversible production action?</h4>
+            <ul>
+              <li>Server-stamped evaluation time within a bounded skew, instead of trusting the caller's.</li>
+              <li>Signed evidence with provenance, so balance and vendor status can't be forged by the agent.</li>
+              <li>Authenticated callers, with <code>actor.id</code> bound to the credential.</li>
+              <li>A durable, append-only audit log with retention, not just a retry ledger.</li>
+              <li>Reviewed, signed policy releases, and a staged rollout.</li>
+              <li>The executor redeeming each ADMIT <code>decision_id</code> exactly once, just before acting.</li>
+              <li>Alerting on HALT and DEFER rates, and an independent review of the rules.</li>
+            </ul>
+          </article>
+          <article><span class="qn">QUESTION 6</span><h4>What did you deliberately not build?</h4>
+            <ul>
+              <li>Authentication, authorization and rate limiting.</li>
+              <li>Currency conversion and evidence signatures.</li>
+              <li>A policy DSL or policy editor; policies are versioned Python data.</li>
+              <li>The referral workflow to the other authority itself.</li>
+              <li>Ledger retention and TTL policy.</li>
+              <li>Any LLM, heuristic scoring or probabilistic judgment.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div><span class="eyebrow">Failure scenario</span><h3>Retries, policy changes and evidence changes</h3>
+        <p class="lead">Each row is a test in <code>tests/test_idempotency.py</code> and a live demo in the Retries tab.</p></div>
+        <div class="tbl"><table>
+          <thead><tr><th>Scenario</th><th>What happens</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Identical request evaluated twice</td><td>The stored decision is returned unchanged, with the same <code>decision_id</code> and <code>replayed: true</code>.</td><td>The caller missed the first response and must get the same answer, not a second decision.</td></tr>
+            <tr><td>Same <code>request_id</code>, changed payload</td><td>HALT with <code>IDEMPOTENCY_CONFLICT</code> (HTTP 409), naming the original <code>decision_id</code>. The original record is never overwritten.</td><td>Ambiguous intent fails closed. A new question needs a new <code>request_id</code>.</td></tr>
+            <tr><td>Policy changes between evaluations</td><td>A retry keeps its original decision and <code>policy_version</code>. A new <code>request_id</code> is judged under the new policy.</td><td>The caller may already have acted on the first answer.</td></tr>
+            <tr><td>Evidence changes between evaluations</td><td>That's a changed payload: a conflict under the same id, and a fresh decision under a new one.</td><td>Keeps "retry" and "ask again with new facts" separate and auditable.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
     </div>
   </section>
 
@@ -286,6 +516,7 @@ footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-si
 <script>
 (() => {
 const $ = (s, el = document) => el.querySelector(s);
+const $id = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const sleep = ms => reduced ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
@@ -303,7 +534,7 @@ function normTs(v) {
 const isoNoMs = ms => new Date(ms).toISOString().replace(/\.\d{3}Z$/, "Z");
 
 /* ---------- API ---------- */
-function showBanner(message) { const b = $("#banner"); b.textContent = message; b.hidden = !message; }
+function showBanner(message) { const b = $id("banner"); b.textContent = message; b.hidden = !message; }
 async function api(path, options = {}) {
   let res;
   try { res = await fetch(path, { headers: { "content-type": "application/json" }, ...options }); }
@@ -327,13 +558,13 @@ async function evaluateApi(request, pv) {
 }
 const toRes = d => ({ decision: d, C: Object.fromEntries(d.checks.map(c => [c.check, c])), gate: d.decided_at_gate });
 
-/* ---------- static model of the ladder (labels only; decisions come from the API) ---------- */
+/* ---------- ladder model (labels only; decisions come from the API) ---------- */
 let POLICIES = {}, POLICY_ORDER = [], CURRENT = "", CASES = [], CATS = [];
 const GATES = [
-  { n: 1, title: "Structure & coverage", checks: ["P6", "P1", "REQ"], verdict: "HALT", exit: "fail" },
-  { n: 2, title: "Definitive prohibitions", checks: ["P3", "P5"], verdict: "HALT", exit: "fail" },
-  { n: 3, title: "Jurisdiction", checks: ["P2"], verdict: "REFER", exit: "over limit" },
-  { n: 4, title: "Evidence sufficiency", checks: ["P4", "EVIDENCE"], verdict: "DEFER", exit: "unknown" },
+  { n: 1, title: "Structure & coverage", short: "Coverage", checks: ["P6", "P1", "REQ"], verdict: "HALT" },
+  { n: 2, title: "Definitive prohibitions", short: "Prohibitions", checks: ["P3", "P5"], verdict: "HALT" },
+  { n: 3, title: "Jurisdiction", short: "Jurisdiction", checks: ["P2"], verdict: "REFER" },
+  { n: 4, title: "Evidence sufficiency", short: "Sufficiency", checks: ["P4", "EVIDENCE"], verdict: "DEFER" },
 ];
 const RULES = {
   P6: { gate: 1, name: () => "Action covered", text: () => "Any action type not covered by the supplied policy cannot be assumed permissible.", reads: ["action.type"], onFail: "HALT" },
@@ -341,9 +572,17 @@ const RULES = {
   REQ: { gate: 1, name: () => "Request valid", text: () => "Assumption: request_id is present and the amount is a positive number.", reads: ["request_id", "action.amount"], onFail: "HALT" },
   P3: { gate: 2, name: () => "Vendor approved", text: () => "The destination vendor must be approved.", reads: ["action.destination", "evidence.vendor_status"], onFail: "HALT", onUnknown: "DEFER" },
   P5: { gate: 2, name: () => "Within balance", text: () => "A transfer may not exceed the currently supplied account balance.", reads: ["action.amount", "evidence.account_balance"], onFail: "HALT", onUnknown: "DEFER" },
-  P2: { gate: 3, name: p => `Within ${usd(p.refer_above)}`, text: p => `Transfers greater than ${usd(p.refer_above)} require another authority.`, reads: ["action.amount", "action.currency"], onFail: "REFER", onUnknown: "DEFER" },
-  P4: { gate: 4, name: () => "Evidence fresh", text: p => `Vendor-status evidence older than ${p.max_evidence_age_seconds / 60} minutes is not sufficient for a determination.`, reads: ["evidence.vendor_status_checked_at", "evaluated_at"], onUnknown: "DEFER" },
+  P2: { gate: 3, name: p => `Within ${usd(p ? p.refer_above : 50000)}`, text: p => `Transfers greater than ${usd(p ? p.refer_above : 50000)} require another authority.`, reads: ["action.amount", "action.currency"], onFail: "REFER", onUnknown: "DEFER" },
+  P4: { gate: 4, name: () => "Evidence fresh", text: p => `Vendor-status evidence older than ${p ? p.max_evidence_age_seconds / 60 : 30} minutes is not sufficient for a determination.`, reads: ["evidence.vendor_status_checked_at", "evaluated_at"], onUnknown: "DEFER" },
   EVIDENCE: { gate: 4, name: () => "Evidence complete", text: () => "Derived: every check that needs evidence found it present, readable and fresh.", reads: [], onUnknown: "DEFER" },
+};
+const SHORT = { P6: "P6", P1: "P1", REQ: "REQ", P3: "P3", P5: "P5", P2: "P2", P4: "P4", EVIDENCE: "EV" };
+const WHEN = {
+  1: "Gate 1 halts when the action type isn't covered, the role may not propose it, or the request is malformed.",
+  2: "Gate 2 halts when fresh evidence shows the vendor isn't approved, or the amount exceeds the supplied balance.",
+  3: "Gate 3 refers transfers above the policy limit to another authority, once nothing definitively forbids them.",
+  4: "Gate 4 defers when any evidence a check needs is missing, unreadable or stale.",
+  5: "ADMIT fires only when every check passes on sufficient evidence.",
 };
 const vLabel = pv => "v" + (POLICY_ORDER.indexOf(pv) + 1);
 
@@ -351,57 +590,144 @@ const vLabel = pv => "v" + (POLICY_ORDER.indexOf(pv) + 1);
 document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => showTab(t.dataset.tab)));
 function showTab(name) {
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.tab === name)));
-  ["flow", "tests", "retries"].forEach(n => { $("#view-" + n).hidden = n !== name; });
+  ["flow", "tests", "retries", "design"].forEach(n => { $id("view-" + n).hidden = n !== name; });
 }
 
-/* ---------- flow ---------- */
-const ladder = $("#ladder");
-GATES.forEach(g => {
-  const rung = document.createElement("div");
-  rung.className = `rung vc-${g.verdict.toLowerCase()}`; rung.id = "rung-" + g.n;
-  rung.innerHTML = `<div class="gate"><div class="gate-h"><span class="mono">GATE ${g.n}</span><b>${esc(g.title)}</b></div>
-    <div class="checks">${g.checks.map(k => `<button class="node chk" id="chip-${k}" data-node="${k}" data-s="N/A" aria-pressed="false"><span class="pid">${k}</span><span class="lbl">${esc(RULES[k].name({ refer_above: 50000 }))}</span><span class="stat">…</span></button>`).join("")}</div></div>
-    <div class="exit"><span>${esc(g.exit)}</span></div>
-    <button class="node verdict vc-${g.verdict.toLowerCase()}" id="vn-${g.n}" data-node="v-${g.n}" aria-pressed="false">${g.verdict}</button>`;
-  ladder.appendChild(rung);
-  const sp = document.createElement("div"); sp.className = "spine"; sp.id = "sp-" + g.n; sp.innerHTML = "<i></i>";
-  ladder.appendChild(sp);
-});
-const admitRow = document.createElement("div");
-admitRow.className = "rowc";
-admitRow.innerHTML = `<button class="node verdict vc-admit" id="vn-5" data-node="v-5" aria-pressed="false">ADMIT</button>`;
-ladder.appendChild(admitRow);
-
-const state = { req: {}, policy: "", res: null, selected: "request", preset: "" };
-
-function paint(res, step) {
-  const gate = res.gate, reach = Math.min(step, gate), done = step >= gate;
-  const policy = POLICIES[state.policy];
+/* ---------- flow canvas ---------- */
+const CY = 210, R = 34;
+const X = { request: 70, g1: 250, g2: 430, g3: 610, g4: 790, admit: 965 };
+function buildCanvas() {
+  const order = ["request", "g1", "g2", "g3", "g4", "admit"];
+  let edges = "", fans = "", sats = "", branches = "", nodes = "", verdicts = "";
+  for (let i = 0; i < 5; i++) {
+    const a = X[order[i]], b = X[order[i + 1]], rb = i === 4 ? 38 : R;
+    edges += `<path class="edge" id="e-${i}" d="M${a + R},${CY} L${b - rb},${CY}"/>`;
+  }
   GATES.forEach(g => {
-    const el = $("#rung-" + g.n);
-    el.classList.toggle("passed", g.n < reach);
-    el.classList.toggle("decisive", done && g.n === gate);
-    el.classList.toggle("unreached", done && g.n > gate);
-    g.checks.forEach(k => {
-      const chip = $("#chip-" + k), c = res.C[k] || { status: "N/A", detail: "" };
-      chip.dataset.s = c.status; chip.querySelector(".stat").textContent = c.status;
-      chip.querySelector(".lbl").textContent = RULES[k].name(policy);
-      chip.title = c.detail;
+    const cx = X["g" + g.n], vc = g.verdict.toLowerCase();
+    g.checks.forEach((k, i) => {
+      const sx = cx + (i - (g.checks.length - 1) / 2) * 46, sy = 88;
+      fans += `<line class="fan" x1="${sx}" y1="${sy + 17}" x2="${cx}" y2="${CY - R - 3}"/>`;
+      sats += `<g class="sat" id="s-${k}" data-node="${k}" data-s="" tabindex="0" role="button" aria-label="${k} check" transform="translate(${sx},${sy})"><title>${k}</title><circle r="17"/><text>${SHORT[k]}</text></g>`;
     });
+    branches += `<path class="edge branch vc-${vc}" id="b-${g.n}" d="M${cx + 24},${CY + 24} C${cx + 40},${CY + 80} ${cx + 50},${CY + 112} ${cx + 63},${CY + 123}"/>`;
+    nodes += `<g class="wf-node gate vc-${vc}" id="n-g${g.n}" data-node="g${g.n}" tabindex="0" role="button" aria-label="Gate ${g.n}: ${esc(g.title)}" transform="translate(${cx},${CY})">
+      <circle class="sel" r="${R + 9}"/><circle class="spin" r="${R + 5}"/><circle class="ring" r="${R}"/><text class="glyph">${g.n}</text>
+      <g class="badge" transform="translate(${Math.round(R * 0.72)},${-Math.round(R * 0.72)})"><circle r="9"/><text>✓</text></g>
+      <text class="lbl" y="${R + 20}">Gate ${g.n}</text><text class="sub" y="${R + 36}">${esc(g.short)}</text></g>`;
+    verdicts += `<g class="wf-node verdict vc-${vc}" id="v-${g.n}" data-node="v-${g.n}" tabindex="0" role="button" aria-label="${g.verdict} verdict from gate ${g.n}" transform="translate(${cx + 80},${CY + 140})">
+      <circle class="sel" r="32"/><circle class="pulse" r="24"/><circle class="ring" r="24"/><text class="vword">${g.verdict}</text></g>`;
   });
-  for (let k = 0; k <= 4; k++) $("#sp-" + k).classList.toggle("lit", step > 0 && k < reach);
-  for (let n = 1; n <= 5; n++) $("#vn-" + n).classList.toggle("on", done && n === gate);
-  const d = res.decision, out = $("#outcome");
+  nodes += `<g class="wf-node trigger" id="n-request" data-node="request" tabindex="0" role="button" aria-label="Request node" transform="translate(${X.request},${CY})">
+    <circle class="sel" r="${R + 9}"/><circle class="spin" r="${R + 5}"/><circle class="ring" r="${R}"/><text class="glyph code">{ }</text>
+    <g class="badge" transform="translate(${Math.round(R * 0.72)},${-Math.round(R * 0.72)})"><circle r="9"/><text>✓</text></g>
+    <text class="lbl" y="${R + 20}">Request</text><text class="sub" id="reqIdText" y="${R + 36}">…</text></g>`;
+  verdicts += `<g class="wf-node verdict end vc-admit" id="v-5" data-node="v-5" tabindex="0" role="button" aria-label="ADMIT verdict" transform="translate(${X.admit},${CY})">
+    <circle class="sel" r="47"/><circle class="pulse" r="38"/><circle class="ring" r="38"/><text class="vword big">ADMIT</text></g>`;
+  $id("canvasHost").innerHTML = `<svg id="canvas" viewBox="0 0 1040 410" role="group" aria-label="Decision workflow: request, four gates with their policy checks, and the four verdicts">
+    ${edges}${branches}${fans}${sats}${nodes}${verdicts}<circle class="packet" id="packet" r="7" cx="${X.request}" cy="${CY}"/></svg>`;
+}
+buildCanvas();
+const packet = $id("packet");
+
+const state = { req: {}, policy: "", res: null, selected: null, preset: "" };
+const checkOf = k => state.res?.C[k] || { status: "N/A", detail: "not evaluated" };
+function badge(node, text) { const t = node.querySelector(".badge text"); if (t) t.textContent = text; }
+function setSat(k, c, pop) {
+  const s = $id("s-" + k); s.dataset.s = c.status;
+  s.querySelector("title").textContent = `${k} · ${RULES[k].name(POLICIES[state.policy])}: ${c.status} (${c.detail})`;
+  if (pop && !reduced) { s.classList.remove("pop"); requestAnimationFrame(() => s.classList.add("pop")); }
+}
+function resetCanvas() {
+  document.querySelectorAll("#canvas .wf-node").forEach(n => n.classList.remove("running", "passed", "decisive", "unreached", "on"));
+  document.querySelectorAll("#canvas .edge").forEach(e => e.classList.remove("active", "done"));
+  document.querySelectorAll("#canvas .sat").forEach(s => { s.dataset.s = ""; s.classList.remove("dim", "pop"); });
+  packet.classList.remove("show");
+}
+function movePacket(path, ms, mine) {
+  return new Promise(resolve => {
+    if (reduced || document.hidden) return resolve();
+    const length = path.getTotalLength(), start = performance.now();
+    let finished = false;
+    const finish = () => { if (!finished) { finished = true; resolve(); } };
+    // Browsers pause animation frames on hidden pages; the timer keeps the run from stalling.
+    setTimeout(finish, ms + 250);
+    packet.classList.add("show");
+    const step = now => {
+      if (finished) return;
+      if (mine !== seq) return finish();
+      const k = Math.min(1, (now - start) / ms), eased = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      const p = path.getPointAtLength(length * eased);
+      packet.setAttribute("cx", p.x); packet.setAttribute("cy", p.y);
+      if (k < 1) requestAnimationFrame(step); else finish();
+    };
+    requestAnimationFrame(step);
+  });
+}
+function showOutcome(res, visible) {
+  const d = res.decision, out = $id("outcome");
   out.className = "outcome vc-" + d.verdict.toLowerCase();
-  out.style.visibility = done ? "visible" : "hidden";
-  $("#outVerdict").textContent = d.verdict;
-  $("#outReason").textContent = d.reason;
-  $("#outCode").textContent = d.reason_code;
-  $("#outId").textContent = d.decision_id;
-  $("#outPolicy").textContent = d.policy_version;
-  const r = obj(state.req), a = obj(r.action);
-  $("#reqTitle").textContent = "Request · " + (r.request_id ?? "(no request_id)");
-  $("#reqSub").textContent = `${a.type ?? "(no action type)"}${isNum(a.amount) ? " · " + usd(a.amount) : ""}`;
+  out.style.visibility = visible ? "visible" : "hidden";
+  $id("outVerdict").textContent = d.verdict;
+  $id("outReason").textContent = d.reason;
+  $id("outCode").textContent = d.reason_code;
+  $id("outId").textContent = d.decision_id;
+  $id("outPolicy").textContent = d.policy_version;
+}
+function updateReqLabel() {
+  const r = obj(state.req);
+  $id("reqIdText").textContent = typeof r.request_id === "string" ? (r.request_id.length > 16 ? r.request_id.slice(0, 15) + "…" : r.request_id) : "(no id)";
+}
+function markDownstream(gate) {
+  GATES.filter(x => x.n > gate).forEach(x => {
+    $id("n-g" + x.n).classList.add("unreached");
+    x.checks.forEach(k => { setSat(k, checkOf(k), false); $id("s-" + k).classList.add("dim"); });
+  });
+  if (gate < 5) $id("v-5").classList.add("unreached");
+}
+function paintFinal(res) {
+  resetCanvas();
+  const reqNode = $id("n-request"); reqNode.classList.add("passed");
+  GATES.forEach(g => {
+    const node = $id("n-g" + g.n);
+    if (g.n > res.gate) return;
+    g.checks.forEach(k => setSat(k, checkOf(k), false));
+    $id("e-" + (g.n - 1)).classList.add("done");
+    if (g.n < res.gate) { node.classList.add("passed"); badge(node, "✓"); }
+    else { node.classList.add("decisive"); badge(node, "!"); $id("b-" + g.n).classList.add("done"); $id("v-" + g.n).classList.add("on"); }
+  });
+  markDownstream(res.gate);
+  if (res.gate === 5) { $id("e-4").classList.add("done"); $id("v-5").classList.add("on"); }
+  showOutcome(res, true);
+}
+async function animateRun(res, mine) {
+  const alive = () => mine === seq;
+  resetCanvas(); showOutcome(res, false);
+  const reqNode = $id("n-request");
+  reqNode.classList.add("running"); await sleep(360); if (!alive()) return;
+  reqNode.classList.remove("running"); reqNode.classList.add("passed");
+  for (const g of GATES) {
+    const edge = $id("e-" + (g.n - 1)), node = $id("n-g" + g.n);
+    edge.classList.add("active"); await movePacket(edge, 460, mine); if (!alive()) return;
+    edge.classList.remove("active"); edge.classList.add("done");
+    node.classList.add("running");
+    for (const k of g.checks) { setSat(k, checkOf(k), true); await sleep(170); if (!alive()) return; }
+    await sleep(160); if (!alive()) return;
+    node.classList.remove("running");
+    if (g.n === res.gate) {
+      node.classList.add("decisive"); badge(node, "!");
+      const branch = $id("b-" + g.n);
+      branch.classList.add("active"); await movePacket(branch, 560, mine); if (!alive()) return;
+      branch.classList.remove("active"); branch.classList.add("done");
+      packet.classList.remove("show"); $id("v-" + g.n).classList.add("on");
+      markDownstream(g.n); showOutcome(res, true); return;
+    }
+    node.classList.add("passed"); badge(node, "✓");
+  }
+  const last = $id("e-4");
+  last.classList.add("active"); await movePacket(last, 460, mine); if (!alive()) return;
+  last.classList.remove("active"); last.classList.add("done");
+  packet.classList.remove("show"); $id("v-5").classList.add("on"); showOutcome(res, true);
 }
 
 let seq = 0;
@@ -413,61 +739,80 @@ async function evalFlow(animate) {
   if (mine !== seq) return;
   showBanner("");
   const res = toRes(decision);
-  state.res = res;
-  if (animate && !reduced) {
-    for (let s = 0; s <= res.gate; s++) { if (mine !== seq) return; paint(res, s); await sleep(190); }
-  }
-  if (mine !== seq) return;
-  paint(res, 99);
-  if (state.selected !== "request") renderOther(state.selected);
+  state.res = res; updateReqLabel();
+  if (animate && !reduced) await animateRun(res, mine); else paintFinal(res);
+  if (mine === seq) renderNode();
 }
 
-ladder.addEventListener("click", e => { const b = e.target.closest("[data-node]"); if (b && state.res) select(b.dataset.node); });
-function select(id) {
-  state.selected = id;
-  document.querySelectorAll("[data-node]").forEach(n => n.setAttribute("aria-pressed", String(n.dataset.node === id)));
-  $("#panel-request").hidden = id !== "request";
-  $("#panel-other").hidden = id === "request";
-  if (id !== "request") renderOther(id);
+/* ---------- selection & node details ---------- */
+function selectedId() { return state.selected || (state.res ? "v-" + state.res.gate : "request"); }
+function markSelected() {
+  const id = selectedId();
+  document.querySelectorAll("#canvas [data-node]").forEach(n => n.classList.toggle("selected", n.dataset.node === id));
 }
+function select(id) { state.selected = id; renderNode(); }
+const canvasHost = $id("canvasHost");
+canvasHost.addEventListener("click", e => { const n = e.target.closest("[data-node]"); if (n && state.res) select(n.dataset.node); });
+canvasHost.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const n = e.target.closest("[data-node]"); if (n && state.res) { e.preventDefault(); select(n.dataset.node); }
+});
 const getPath = (o, path) => path.split(".").reduce((acc, k) => (acc && typeof acc === "object") ? acc[k] : undefined, o);
-const WHEN = {
-  1: "Gate 1 halts when the action type isn't covered, the role may not propose it, or the request is malformed.",
-  2: "Gate 2 halts when fresh evidence shows the vendor isn't approved, or the amount exceeds the supplied balance.",
-  3: "Gate 3 refers transfers above the policy limit to another authority, once nothing definitively forbids them.",
-  4: "Gate 4 defers when any evidence a check needs is missing, unreadable or stale.",
-  5: "ADMIT fires only when every check passes on sufficient evidence.",
-};
-function renderOther(id) {
-  const box = $("#panel-other"), res = state.res, p = POLICIES[state.policy];
-  const back = `<div class="actions"><button class="btn" data-go="request">Edit request</button></div>`;
-  if (id.startsWith("v-")) {
-    const n = Number(id.slice(2)), name = n === 5 ? "ADMIT" : GATES[n - 1].verdict, hit = res.gate === n;
-    box.innerHTML = `<div style="display:grid;gap:12px">
-      <div><span class="eyebrow">Expanded node · verdict</span><h3 style="margin-top:2px">${pill(name)} ${hit ? "This request's verdict" : "Not reached for this request"}</h3></div>
-      <p class="rule">${esc(WHEN[n])}</p>
-      ${hit ? `<p>${esc(res.decision.reason)}</p>` : `<p>This request stopped at ${res.gate === 5 ? "ADMIT" : "gate " + res.gate} with ${pill(res.decision.verdict)}.</p>`}
-      <span class="eyebrow">Decision record from the API</span><pre>${esc(JSON.stringify(res.decision, null, 2))}</pre>${back}</div>`;
+function renderNode() {
+  if (!state.res) return;
+  markSelected();
+  const id = selectedId(), res = state.res, p = POLICIES[state.policy], box = $id("nodePane");
+  if (id === "request") {
+    const r = obj(state.req), a = obj(r.action), ev = obj(r.evidence), ac = obj(r.actor);
+    const e = normTs(r.evaluated_at), c = normTs(ev.vendor_status_checked_at);
+    box.innerHTML = `<div><span class="eyebrow">Selected node · trigger</span><h3 style="margin-top:2px">Request ${esc(r.request_id ?? "(no request_id)")}</h3></div>
+      <p class="rule">The agent's proposed action and its evidence. Nothing here is decided yet; the gates read these fields.</p>
+      <div class="kv"><span>actor</span><span>${esc(ac.id ?? "?")} · ${esc(ac.role ?? "(missing role)")}</span>
+        <span>action</span><span>${esc(a.type ?? "(missing type)")}${isNum(a.amount) ? " · " + usd(a.amount) + " " + esc(a.currency ?? "") : ""}${a.destination ? " → " + esc(a.destination) : ""}</span>
+        <span>balance</span><span>${isNum(ev.account_balance) ? usd(ev.account_balance) : "<em>missing</em>"}</span>
+        <span>vendor</span><span>${esc(ev.vendor_status ?? "missing")}${e && c ? ", checked " + age((e.ms - c.ms) / 1000) + " before evaluation" : ""}</span>
+        <span>evaluated_at</span><span class="mono" style="font-size:.8rem">${esc(r.evaluated_at ?? "missing")}</span></div>
+      <div class="actions"><button class="btn" data-focus-editor>Edit the request</button></div>`;
     return;
   }
-  const m = RULES[id], c = res.C[id] || { status: "N/A", detail: "" };
+  if (/^g\d$/.test(id)) {
+    const n = Number(id.slice(1)), g = GATES[n - 1];
+    const status = res.gate > n ? "Passed" : res.gate === n ? `Decided ${res.decision.verdict}` : "Not reached (its checks still ran)";
+    box.innerHTML = `<div><span class="eyebrow">Selected node · gate ${n}</span><h3 style="margin-top:2px">${esc(g.title)}</h3></div>
+      <p class="rule">${esc(WHEN[n])}</p>
+      <div class="kv"><span>Result</span><span>${res.gate === n ? pill(res.decision.verdict) + " " : ""}${esc(status)}</span>
+        ${g.checks.map(k => `<span>${k}</span><span data-s="${esc(checkOf(k).status)}"><span class="stat">${esc(checkOf(k).status)}</span> ${esc(RULES[k].name(p))}: ${esc(checkOf(k).detail)}</span>`).join("")}</div>
+      <p class="hint">Click a small circle above the gate for a single check.</p>`;
+    return;
+  }
+  if (id.startsWith("v-")) {
+    const n = Number(id.slice(2)), name = n === 5 ? "ADMIT" : GATES[n - 1].verdict, hit = res.gate === n;
+    box.innerHTML = `<div><span class="eyebrow">Selected node · verdict</span><h3 style="margin-top:2px">${pill(name)} ${hit ? "This request's verdict" : "Not reached for this request"}</h3></div>
+      <p class="rule">${esc(WHEN[n])}</p>
+      ${hit ? `<p>${esc(res.decision.reason)}</p>` : `<p>This request stopped at ${res.gate === 5 ? "ADMIT" : "gate " + res.gate} with ${pill(res.decision.verdict)}.</p>`}
+      <span class="eyebrow">Decision record from the API</span><pre>${esc(JSON.stringify(res.decision, null, 2))}</pre>`;
+    return;
+  }
+  const m = RULES[id], c = checkOf(id);
   const reads = id === "EVIDENCE"
-    ? ["P3", "P4", "P5", "P2"].map(k => `<span>${k}</span><span>${esc(res.C[k]?.status ?? "N/A")}</span>`).join("")
+    ? ["P3", "P4", "P5", "P2"].map(k => `<span>${k}</span><span>${esc(checkOf(k).status)}</span>`).join("")
     : m.reads.map(path => { const v = getPath(state.req, path); return `<span>${esc(path)}</span><span class="mono" style="font-size:.8rem">${v === undefined ? "<em>missing</em>" : esc(JSON.stringify(v))}</span>`; }).join("");
-  box.innerHTML = `<div style="display:grid;gap:12px">
-    <div><span class="eyebrow">Expanded node · policy check · gate ${m.gate}</span><h3 style="margin-top:2px">${id} · ${esc(m.name(p))}</h3></div>
+  box.innerHTML = `<div><span class="eyebrow">Selected node · policy check · gate ${m.gate}</span><h3 style="margin-top:2px">${id} · ${esc(m.name(p))}</h3></div>
     <p class="rule">${esc(m.text(p))}</p>
     <div class="kv"><span>Status</span><span data-s="${esc(c.status)}"><span class="stat">${esc(c.status)}</span></span>
       <span>Detail</span><span>${esc(c.detail)}</span>
       ${m.onFail ? `<span>If FAIL</span><span>${pill(m.onFail)}</span>` : ""}
       ${m.onUnknown ? `<span>If UNKNOWN</span><span>${pill(m.onUnknown)}</span>` : ""}</div>
     <span class="eyebrow">${id === "EVIDENCE" ? "Statuses it combines" : "Values it read"}</span>
-    <div class="kv">${reads}</div>${back}</div>`;
+    <div class="kv">${reads}</div>`;
 }
-$("#panel-other").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) select(b.dataset.go); });
+$id("nodePane").addEventListener("click", e => {
+  if (e.target.closest("[data-focus-editor]")) { $id("panel-request").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); $id("f-amount").focus({ preventScroll: true }); }
+});
 
-const presetSel = $("#preset"), policySel = $("#policy");
-const F = id => $("#f-" + id);
+/* ---------- request editor ---------- */
+const presetSel = $id("preset"), policySel = $id("policy");
+const F = id => $id("f-" + id);
 function setSel(el, v) {
   const val = (v === undefined || v === null) ? "__missing__" : String(v);
   if (![...el.options].some(o => o.value === val)) el.add(new Option(val, val));
@@ -484,17 +829,17 @@ function syncFields() {
   F("age").value = e && c ? Math.round((e.ms - c.ms) / 60000 * 100) / 100 : "";
 }
 function markJson(ok, message) {
-  $("#json").classList.toggle("bad", !ok);
-  $("#jsonMsg").className = ok ? "jsonmsg" : "jsonmsg bad";
-  $("#jsonMsg").textContent = message;
+  $id("json").classList.toggle("bad", !ok);
+  $id("jsonMsg").className = ok ? "jsonmsg" : "jsonmsg bad";
+  $id("jsonMsg").textContent = message;
 }
-function writeJson() { $("#json").value = JSON.stringify(state.req, null, 2); markJson(true, "Valid JSON"); }
+function writeJson() { $id("json").value = JSON.stringify(state.req, null, 2); markJson(true, "Valid JSON"); }
 let timer;
 const live = () => { clearTimeout(timer); timer = setTimeout(() => evalFlow(false), 180); };
 const setOrDelete = (o, k, v) => { if (v === undefined) delete o[k]; else o[k] = v; };
 ["rid", "role", "type", "amount", "currency", "balance", "status", "age"].forEach(id => {
   F(id).addEventListener("input", () => {
-    if (!obj(state.req) || state.req !== obj(state.req)) state.req = {};
+    if (state.req !== obj(state.req)) state.req = {};
     const r = state.req, v = F(id).value, miss = v === "" || v === "__missing__";
     r.actor = obj(r.actor); r.action = obj(r.action); r.evidence = obj(r.evidence);
     if (id === "rid") setOrDelete(r, "request_id", v === "" ? undefined : v);
@@ -511,32 +856,33 @@ const setOrDelete = (o, k, v) => { if (v === undefined) delete o[k]; else o[k] =
     writeJson(); live();
   });
 });
-$("#json").addEventListener("input", () => {
-  try { state.req = JSON.parse($("#json").value); markJson(true, "Valid JSON"); syncFields(); live(); }
+$id("json").addEventListener("input", () => {
+  try { state.req = JSON.parse($id("json").value); markJson(true, "Valid JSON"); syncFields(); live(); }
   catch (err) { markJson(false, "Not valid JSON yet: " + err.message); }
 });
 function loadPreset(id) {
   const c = CASES.find(x => x.id === id); if (!c) return;
-  state.preset = id; presetSel.value = id; state.req = clone(c.request);
+  state.preset = id; state.selected = null; presetSel.value = id; state.req = clone(c.request);
   state.policy = c.policy_version; policySel.value = c.policy_version;
   writeJson(); syncFields();
 }
 presetSel.addEventListener("change", () => { loadPreset(presetSel.value); evalFlow(true); });
 policySel.addEventListener("change", () => { state.policy = policySel.value; evalFlow(true); });
-$("#evalBtn").addEventListener("click", () => evalFlow(true));
-$("#resetBtn").addEventListener("click", () => { loadPreset(state.preset); evalFlow(true); });
+$id("evalBtn").addEventListener("click", () => evalFlow(true));
+$id("runBtn").addEventListener("click", () => evalFlow(true));
+$id("resetBtn").addEventListener("click", () => { loadPreset(state.preset); evalFlow(true); });
 
 /* ---------- test run ---------- */
 const results = {};
 let filter = "All";
-$("#filters").addEventListener("click", e => {
+$id("filters").addEventListener("click", e => {
   const b = e.target.closest("[data-f]"); if (!b) return;
   filter = b.dataset.f;
   document.querySelectorAll(".fchip").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.f === filter)));
   renderRows();
 });
 const stripHTML = (gate, verdict, upto) => `<span class="strip vc-${String(verdict || "admit").toLowerCase()}">${[1, 2, 3, 4, 5].map(i =>
-  `<i class="${gate == null || i > upto ? "" : i < gate ? "p" : i === gate ? "x" : ""}" title="${i === 5 ? "ADMIT" : "Gate " + i}"></i>`).join("")}</span>`;
+  `${i > 1 ? "<b></b>" : ""}<i class="${gate == null || i > upto ? "" : i < gate ? "p" : i === gate ? "x" : ""}" title="${i === 5 ? "ADMIT" : "Gate " + i}"></i>`).join("")}</span>`;
 function rowHTML(c) {
   const r = results[c.id], st = r ? r.state : "idle";
   let res = `<span class="res wait">not run</span>`;
@@ -551,15 +897,15 @@ function rowHTML(c) {
     <td>${res}</td>
     <td><button class="btn sm" data-open="${esc(c.id)}">Open in Flow</button></td></tr>`;
 }
-function renderRows() { $("#caseRows").innerHTML = CASES.filter(c => filter === "All" || c.category === filter).map(rowHTML).join(""); }
-function updateRow(c) { const tr = document.getElementById("row-" + c.id); if (tr) tr.outerHTML = rowHTML(c); }
+function renderRows() { $id("caseRows").innerHTML = CASES.filter(c => filter === "All" || c.category === filter).map(rowHTML).join(""); }
+function updateRow(c) { const tr = $id("row-" + c.id); if (tr) tr.outerHTML = rowHTML(c); }
 function renderSummary(note, secs) {
   const done = CASES.filter(c => results[c.id]?.state === "done"), passed = done.filter(c => results[c.id].pass);
   const fails = done.length - passed.length;
-  $("#summary").innerHTML = `<span class="count"><b>${passed.length}</b> / ${CASES.length} passed</span>
+  $id("summary").innerHTML = `<span class="count"><b>${passed.length}</b> / ${CASES.length} passed</span>
     ${fails ? `<span class="res bad">${fails} failing</span>` : done.length === CASES.length ? `<span class="res ok">all passing</span>` : ""}
     <span class="hint">${esc(note)}${secs != null ? ` · ${secs.toFixed(1)}s` : ""}</span>`;
-  $("#prog").style.width = (done.length / Math.max(CASES.length, 1) * 100) + "%";
+  $id("prog").style.width = (done.length / Math.max(CASES.length, 1) * 100) + "%";
 }
 async function runCase(c, animate) {
   results[c.id] = { state: "running" }; updateRow(c);
@@ -571,24 +917,24 @@ async function runCase(c, animate) {
   if (c.expected_reason_code && d.reason_code !== c.expected_reason_code) whyNot.push(`expected ${c.expected_reason_code}, got ${d.reason_code}`);
   if (c.same_decision_as && d.decision_id !== results[c.same_decision_as]?.decision?.decision_id) whyNot.push(`decision_id differs from ${c.same_decision_as}`);
   const r = results[c.id] = { state: "running", decision: d, gate: d.decided_at_gate, upto: 0, pass: whyNot.length === 0, why: whyNot.join("; ") };
-  if (animate) for (let i = 1; i <= r.gate; i++) { r.upto = i; updateRow(c); await sleep(55); }
+  if (animate) for (let i = 1; i <= r.gate; i++) { r.upto = i; updateRow(c); await sleep(60); }
   r.upto = 5; r.state = "done"; updateRow(c);
 }
 let running = false;
 async function runAll(animate) {
   if (running) return; running = true;
   const t0 = performance.now();
-  $("#runAll").disabled = true;
+  $id("runAll").disabled = true;
   CASES.forEach(c => { delete results[c.id]; });
   renderRows(); renderSummary("running…");
   for (const c of CASES) { await runCase(c, animate); renderSummary("running…"); if (animate) await sleep(30); }
   renderSummary(animate ? "last run just now" : "ran automatically when the page loaded", (performance.now() - t0) / 1000);
-  $("#runAll").disabled = false; running = false;
+  $id("runAll").disabled = false; running = false;
 }
-$("#runAll").addEventListener("click", () => runAll(true));
-$("#caseRows").addEventListener("click", e => {
+$id("runAll").addEventListener("click", () => runAll(true));
+$id("caseRows").addEventListener("click", e => {
   const b = e.target.closest("[data-open]"); if (!b) return;
-  loadPreset(b.dataset.open); showTab("flow"); select("request"); evalFlow(true);
+  loadPreset(b.dataset.open); showTab("flow"); evalFlow(true);
 });
 
 /* ---------- retries ---------- */
@@ -632,15 +978,15 @@ function cardHTML(s) {
         ${c.out.kind === "new" ? `<span class="tag">new decision · ${esc(c.out.decision.reason_code)}</span>` : ""}` : `<span class="hint">${sent ? "sending…" : "not sent yet"}</span>`}</span></li>`).join("")}</ol>
     ${st.done ? `<p class="outc">${esc(s.outcome)}</p>` : ""}</article>`;
 }
-function renderScen() { $("#scen").innerHTML = SCEN.map(cardHTML).join(""); }
+function renderScen() { $id("scen").innerHTML = SCEN.map(cardHTML).join(""); }
 function renderLedger() {
-  $("#ledgerRows").innerHTML = [...touched.values()].map(rec => `<tr><td class="id">${esc(rec.request_id)}</td><td class="id">${esc(rec.payload_fingerprint.slice(0, 19))}…</td><td class="id">${esc(rec.decision.decision_id)}</td><td>${pill(rec.decision.verdict)}</td><td class="id">${esc(rec.decision.policy_version)}</td></tr>`).join("")
+  $id("ledgerRows").innerHTML = [...touched.values()].map(rec => `<tr><td class="id">${esc(rec.request_id)}</td><td class="id">${esc(rec.payload_fingerprint.slice(0, 19))}…</td><td class="id">${esc(rec.decision.decision_id)}</td><td>${pill(rec.decision.verdict)}</td><td class="id">${esc(rec.decision.policy_version)}</td></tr>`).join("")
     || `<tr><td colspan="5" class="hint">Nothing recorded from this page yet. Run a scenario.</td></tr>`;
 }
 async function runScenario(s) {
   const calls = s.calls(runTag());
   scenState[s.id] = { calls, done: false, busy: true };
-  const card = () => { const el = document.getElementById("card-" + s.id); if (el) el.outerHTML = cardHTML(s); };
+  const card = () => { const el = $id("card-" + s.id); if (el) el.outerHTML = cardHTML(s); };
   card();
   for (const c of calls) {
     await sleep(350);
@@ -654,11 +1000,11 @@ async function runScenario(s) {
   }
   Object.assign(scenState[s.id], { done: !calls.some(c => c.error), busy: false }); card();
 }
-$("#scen").addEventListener("click", e => { const b = e.target.closest("[data-run]"); if (b) runScenario(SCEN.find(s => s.id === b.dataset.run)); });
-$("#runScen").addEventListener("click", async () => {
-  $("#runScen").disabled = true;
+$id("scen").addEventListener("click", e => { const b = e.target.closest("[data-run]"); if (b) runScenario(SCEN.find(s => s.id === b.dataset.run)); });
+$id("runScen").addEventListener("click", async () => {
+  $id("runScen").disabled = true;
   for (const s of SCEN) await runScenario(s);
-  $("#runScen").disabled = false;
+  $id("runScen").disabled = false;
 });
 
 /* ---------- boot ---------- */
@@ -671,20 +1017,20 @@ $("#runScen").addEventListener("click", async () => {
     CASES = cases.body.cases;
     CATS = [...new Set(CASES.map(c => c.category))];
     const redis = health.body.ledger === "RedisLedger";
-    $("#apiDot").className = "dot ok";
-    $("#apiText").textContent = `API online · policy ${CURRENT}`;
-    $("#ledgerText").innerHTML = `<span class="dot ${redis ? "ok" : "warn"}"></span>ledger: ${redis ? "Upstash Redis" : "in-memory (resets between instances)"}`;
+    $id("apiDot").className = "dot ok";
+    $id("apiText").textContent = `API online · policy ${CURRENT}`;
+    $id("ledgerText").innerHTML = `<span class="dot ${redis ? "ok" : "warn"}"></span>ledger: ${redis ? "Upstash Redis" : "in-memory (resets between instances)"}`;
   } catch (err) {
-    $("#apiDot").className = "dot bad"; $("#apiText").textContent = "API unreachable";
+    $id("apiDot").className = "dot bad"; $id("apiText").textContent = "API unreachable";
     showBanner(err.message); return;
   }
   policySel.innerHTML = POLICY_ORDER.map((v, i) => `<option value="${esc(v)}">v${i + 1} · ${esc(v)}${v === CURRENT ? " (current)" : ""}</option>`).join("");
   presetSel.innerHTML = CATS.map(cat => `<optgroup label="${esc(cat)}">${CASES.filter(c => c.category === cat).map(c => `<option value="${esc(c.id)}">${esc(c.title)}</option>`).join("")}</optgroup>`).join("");
-  $("#filters").innerHTML = ["All", ...CATS].map(c => `<button class="fchip" data-f="${esc(c)}" aria-pressed="${c === "All"}">${esc(c)}</button>`).join("");
+  $id("filters").innerHTML = ["All", ...CATS].map(c => `<button class="fchip" data-f="${esc(c)}" aria-pressed="${c === "All"}">${esc(c)}</button>`).join("");
   loadPreset("admit-normal");
-  await evalFlow(false);
-  renderScen(); renderLedger();
-  renderRows(); runAll(false);
+  renderScen(); renderLedger(); renderRows();
+  evalFlow(!document.hidden);
+  runAll(false);
 })();
 })();
 </script>
