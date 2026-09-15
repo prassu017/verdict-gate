@@ -2,7 +2,7 @@
 
 Decides whether an agent's already-chosen action may proceed, using only the request, policy and supplied evidence. Returns exactly one verdict: ADMIT, HALT, DEFER or REFER. No LLM, no clock reads.
 
-- **Console:** flow, live test run, retry scenarios (link in the repo description)
+- **Console:** https://verdict-gate.vercel.app (flow, test run, retries, design and answers)
 - **Python:** `verdict_gate.evaluate(request) -> dict`; pure core `decide(request, policy)`
 - **HTTP:** `POST /api/evaluate` (recorded), `POST /api/decide` (not recorded)
 

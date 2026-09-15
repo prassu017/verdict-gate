@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from verdict_gate import CURRENT_POLICY, POLICIES, DecisionService, decide, ledger_from_env
@@ -71,6 +71,11 @@ def policies_endpoint():
 @app.get("/api/cases")
 def cases_endpoint():
     return {"cases": [case.to_dict() for case in load_cases()]}
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    return RedirectResponse("/favicon.svg", status_code=307)
 
 
 @app.get("/api/health")
